@@ -1,0 +1,4 @@
+data/*
+!data/provided
+results/
+.ipynb_checkpoints/

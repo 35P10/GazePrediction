@@ -1,0 +1,14 @@
+{
+  "url": "https://git.cai.simtech.uni-stuttgart.de/public-projects/SalChartQA/archive/main.tar.gz",
+  "downloaded_date": "2026-10-18",
+  "sha256": {
+    "LICENSE": "7cbe019c7ffeba39e963456d2e7a3a1e313c14cc2fa9935f9642e648ff87dec5",
+    "README.md": "13b9dedced4a870cef1c10d8c030c9701e163ad27ebf2ed9e1d2154b53d85761",
+    "dataset_new.py": "34b5d32a5dcc23bd8b4136c8195f85ed2c61012cfeead148e4dd0e0ebdfde838",
+    "env.py": "63dc9564e95a36af3cea404a88843e621d4454d8244b166baf5861a3e2296ac6",
+    "evaluation.py": "e889627e8b73d35beba9f1424f4da620f7a3181a9afc22aebb3983e1620b1a8b",
+    "evaluation.sh": "9be689ba6069ded90306b829bd73c44be622e31ff41ccc2ce6c583ef95c22287",
+    "model_swin.py": "19de51c19ed9835614dd546f2993188f79b61874640d2df2ef1b24fc78455814",
+    "tokenizer_bert.py": "a205503783b1eb0a52d81d488fb281c458067e1f659821af57f7f63958268e47"
+  }
+}
