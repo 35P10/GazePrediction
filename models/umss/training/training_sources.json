@@ -1,0 +1,49 @@
+{
+  "_comment": "Pinned downloads for UMSS stage-1 training. MASSVIS data: research and educational use only, no redistribution (massvis.mit.edu).",
+  "archives": [
+    {
+      "name": "GT_EFD_500_2000_5000",
+      "url": "https://darus.uni-stuttgart.de/api/access/datafile/198065",
+      "source": "DaRUS doi:10.18419/DARUS-3361 V2, Data/UMSS/GT_EFD_500_2000_5000.zip (MASSVIS images, train/val split, released EFD maps)",
+      "sha256": "af15cda9ff4ad978eb9ee75d1b4e608b720e8c73125a29503386ed712a55d0a2",
+      "extract_to": "."
+    },
+    {
+      "name": "UMSS_official_outputs",
+      "url": "https://darus.uni-stuttgart.de/api/access/datafile/198061",
+      "source": "DaRUS doi:10.18419/DARUS-3361 V2, Data/UMSS/UMSS.zip (authors' MD-EAM maps for the 66 evaluation images)",
+      "sha256": "2014feb6e61eb2f362368a4961790589d8df32e7124afdcd7da26f171c224557",
+      "extract_to": "official"
+    },
+    {
+      "name": "massvis_fixationsByVis",
+      "url": "https://raw.githubusercontent.com/massvis/eyetracking/3022279566ceddeca909fc18366406e26aca64a2/csv_files/fixationsByVis.zip",
+      "source": "github.com/massvis/eyetracking @ 3022279",
+      "sha256": "cfa713dfd9c647813a3b5c071a4e9e654f1c6840fd2128466d7eec088c81d792",
+      "extract_to": "massvis"
+    },
+    {
+      "name": "massvis_elementLabels",
+      "url": "https://raw.githubusercontent.com/massvis/dataset/e093a69d8e9f156a51f6d458a4bdf543e2b35675/csv_files/targets393_elementLabels.zip",
+      "source": "github.com/massvis/dataset @ e093a69",
+      "sha256": "7cabad2cbb41fe88555139dcee04ef8a75f13b61a01187290eff9e5fff33ac8e",
+      "extract_to": "massvis"
+    }
+  ],
+  "files": [
+    {
+      "name": "mdsem_codecharts0_cameraready_weights.hdf5",
+      "url": "http://multiduration-saliency.csail.mit.edu/data/mdsem_codecharts0_cameraready_weights.hdf5",
+      "source": "MD-SEM (Fosco et al., CVPR 2020) CodeCharts checkpoint; the starting weights named in UMSS-S1.ipynb. Served over HTTP only; the checksum guards it.",
+      "sha256": "3988d8e7091c60567ebb1f436ee768322be26bb6d64c783ca901eb19a9a586a2",
+      "dest": "mdsem_codecharts0_cameraready_weights.hdf5"
+    },
+    {
+      "name": "singleduration_models.py",
+      "url": "https://raw.githubusercontent.com/diviz-mit/multiduration-saliency/5aa23df690e6cfe0783d98c7d76a02c33220f73a/src/singleduration_models.py",
+      "source": "github.com/diviz-mit/multiduration-saliency @ 5aa23df. Imported by the deposit's util.py but missing from DaRUS.",
+      "sha256": "9ec0de3d68bfc573a3d5db6d1791858ce00c1783b3808005ff68d164086b090c",
+      "dest": "extra_src/singleduration_models.py"
+    }
+  ]
+}

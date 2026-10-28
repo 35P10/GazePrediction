@@ -1,0 +1,9 @@
+# Training Docker context: source adapters and pipeline only; run data is mounted.
+**
+!reference/
+!reference/**
+!evaluation/
+!evaluation/**
+!training/
+!training/**
+**/__pycache__/

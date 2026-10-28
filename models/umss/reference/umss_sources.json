@@ -1,0 +1,106 @@
+{
+  "dataset": "doi:10.18419/DARUS-3361",
+  "version": "2.0",
+  "files": [
+    {
+      "id": 198093,
+      "path": "README.md",
+      "md5": "62c52143da13a7c3a4b95100c1ca7f95"
+    },
+    {
+      "id": 238499,
+      "path": "Code/README.md",
+      "md5": "eb628aea54be3302fc476b7c9f13a8d9"
+    },
+    {
+      "id": 238498,
+      "path": "Code/scripts/UMSS/UMSS-S1.ipynb",
+      "md5": "415683561004eb7ff498165064453e54"
+    },
+    {
+      "id": 198049,
+      "path": "Code/scripts/UMSS/UMSS-S2.ipynb",
+      "md5": "b9163eb5ec206f4fde38de1d2c17f1cd"
+    },
+    {
+      "id": 238497,
+      "path": "Code/scripts/src/attentive_convlstm_new.py",
+      "md5": "e5810957b65db7b2d05c1baf124db235"
+    },
+    {
+      "id": 238494,
+      "path": "Code/scripts/src/cb.py",
+      "md5": "5c89f2f4bcbc8ece3662b0c86dee047e"
+    },
+    {
+      "id": 238493,
+      "path": "Code/scripts/src/classif_capable_models.py",
+      "md5": "0f341a3c7bf9e29896bb0d93aeb128b0"
+    },
+    {
+      "id": 238491,
+      "path": "Code/scripts/src/data_loading.py",
+      "md5": "e94e104658a8ebd452a35453950fa3f5"
+    },
+    {
+      "id": 238495,
+      "path": "Code/scripts/src/dcn_resnet_new.py",
+      "md5": "cc3d2204ee37478656223a43ea4a8504"
+    },
+    {
+      "id": 238490,
+      "path": "Code/scripts/src/gaussian_prior_new.py",
+      "md5": "58032158181a246f9923e8927bb902b4"
+    },
+    {
+      "id": 238489,
+      "path": "Code/scripts/src/losses_keras2.py",
+      "md5": "863434473e3b904ab18aa359c4bd3775"
+    },
+    {
+      "id": 238487,
+      "path": "Code/scripts/src/multiduration_models.py",
+      "md5": "9cfeecb40ab06f44acb05ac1f67616bc"
+    },
+    {
+      "id": 198071,
+      "path": "Code/scripts/saliency/sal_imp_utilities.py",
+      "md5": "7c480f990b478cd870bc8f705aef3970"
+    },
+    {
+      "id": 238496,
+      "path": "Code/scripts/src/saltinet_util.py",
+      "md5": "362cd5d0c7d2daab6523cff23eb3a9d2"
+    },
+    {
+      "id": 238492,
+      "path": "Code/scripts/src/util.py",
+      "md5": "e0ba3b04aeb80cf118771f12cd2463af"
+    },
+    {
+      "id": 238488,
+      "path": "Code/scripts/src/visualization_functions.py",
+      "md5": "c9244d38b58d060bf4a67d15290df8bd"
+    },
+    {
+      "id": 238486,
+      "path": "Code/scripts/src/xception_custom.py",
+      "md5": "c94dea75ef2c5e2eda6a1ac97bfe3ea4"
+    },
+    {
+      "id": 198060,
+      "path": "Code/scripts/UMSS/generate_Massvis-EFD.ipynb",
+      "md5": "21d3cf9cbd2353dc97701c19c553a79a"
+    },
+    {
+      "id": 198094,
+      "path": "Code/scripts/metrics/saliency_saltinet_csv.py",
+      "md5": "cb0819060f89b464a5c31eb3ad5a4fe1"
+    },
+    {
+      "id": 198015,
+      "path": "Code/scripts/saliency/eval.py",
+      "md5": "e8fbb74059e30cccbf2d0c78436c1eb7"
+    }
+  ]
+}
