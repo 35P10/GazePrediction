@@ -1,0 +1,11 @@
+# Python 3.8 kernel for 01_reproduce_umss.ipynb (versions of .venv-chartist).
+# The MD-EAM network itself runs in the Docker image of models/umss/training.
+numpy==1.24.4
+scipy==1.10.1
+pandas==2.0.3
+Pillow==10.4.0
+scikit-image==0.19.3
+fastdtw==0.3.4
+natsort==7.1.1
+ipykernel==6.29.5
+matplotlib==3.7.5

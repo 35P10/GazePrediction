@@ -1,0 +1,6 @@
+data/
+.ipynb_checkpoints/
+
+# Large archives from the pinned official deposit; restored by sync_official_repository.py.
+/official_repository/Data/
+/official_repository/Study/generated_gifs.zip

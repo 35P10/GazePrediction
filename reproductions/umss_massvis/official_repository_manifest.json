@@ -1,0 +1,993 @@
+{
+  "deposit": "doi:10.18419/DARUS-3361",
+  "version": "2.0",
+  "files": [
+    {
+      "id": 238499,
+      "path": "Code/README.md",
+      "bytes": 1629,
+      "md5": "eb628aea54be3302fc476b7c9f13a8d9",
+      "download_format": "original"
+    },
+    {
+      "id": 238498,
+      "path": "Code/scripts/UMSS/UMSS-S1.ipynb",
+      "bytes": 11770,
+      "md5": "415683561004eb7ff498165064453e54",
+      "download_format": "original"
+    },
+    {
+      "id": 198049,
+      "path": "Code/scripts/UMSS/UMSS-S2.ipynb",
+      "bytes": 14162,
+      "md5": "b9163eb5ec206f4fde38de1d2c17f1cd",
+      "download_format": "original"
+    },
+    {
+      "id": 198060,
+      "path": "Code/scripts/UMSS/generate_Massvis-EFD.ipynb",
+      "bytes": 11276,
+      "md5": "21d3cf9cbd2353dc97701c19c553a79a",
+      "download_format": "original"
+    },
+    {
+      "id": 198027,
+      "path": "Code/scripts/UMSS/saltinet_util.py",
+      "bytes": 6755,
+      "md5": "23791ed65f79d57d8391324b29cc8a1e",
+      "download_format": "original"
+    },
+    {
+      "id": 198055,
+      "path": "Code/scripts/metrics/Results/SS/best/UMSS_best.tab",
+      "bytes": 1002,
+      "md5": "4f82b636ee8b35a154795f78e7d629ad",
+      "download_format": "original",
+      "uploaded_name": "UMSS_best.csv"
+    },
+    {
+      "id": 197975,
+      "path": "Code/scripts/metrics/Results/SS/best/UMSS_best.txt",
+      "bytes": 11,
+      "md5": "63671e0a61dcb8141b6ce6aeb280badf",
+      "download_format": "original"
+    },
+    {
+      "id": 198064,
+      "path": "Code/scripts/metrics/Results/SS/best/nc2020_best.tab",
+      "bytes": 1013,
+      "md5": "76960486d0d61b22801bfec7978e9132",
+      "download_format": "original",
+      "uploaded_name": "nc2020_best.csv"
+    },
+    {
+      "id": 198102,
+      "path": "Code/scripts/metrics/Results/SS/best/nc2020_best.txt",
+      "bytes": 11,
+      "md5": "cc83dbef13b85f6fa98771bc3d619924",
+      "download_format": "original"
+    },
+    {
+      "id": 198097,
+      "path": "Code/scripts/metrics/Results/SS/best/pathgan_best.tab",
+      "bytes": 950,
+      "md5": "31ef37843530c888592327521ed2ea7c",
+      "download_format": "original",
+      "uploaded_name": "pathgan_best.csv"
+    },
+    {
+      "id": 198070,
+      "path": "Code/scripts/metrics/Results/SS/best/pathgan_best.txt",
+      "bytes": 11,
+      "md5": "88f6f07cd68b3ca6e96dcf9a14601f95",
+      "download_format": "original"
+    },
+    {
+      "id": 198089,
+      "path": "Code/scripts/metrics/Results/SS/best/saltinet_best.tab",
+      "bytes": 1017,
+      "md5": "193f3fa21750338b9e25192f08073d43",
+      "download_format": "original",
+      "uploaded_name": "saltinet_best.csv"
+    },
+    {
+      "id": 198098,
+      "path": "Code/scripts/metrics/Results/SS/best/saltinet_best.txt",
+      "bytes": 11,
+      "md5": "f9e7087a251cbd5886651e75854c949d",
+      "download_format": "original"
+    },
+    {
+      "id": 197996,
+      "path": "Code/scripts/metrics/Results/SS/mean/UMSS_mean.tab",
+      "bytes": 377050,
+      "md5": "1eccd97158e08e2cc28e9f2366568ef0",
+      "download_format": "original",
+      "uploaded_name": "UMSS_mean.csv"
+    },
+    {
+      "id": 198007,
+      "path": "Code/scripts/metrics/Results/SS/mean/UMSS_mean.txt",
+      "bytes": 5328,
+      "md5": "ef46b889acfc1296331dc2eba7f8838d",
+      "download_format": "original"
+    },
+    {
+      "id": 198054,
+      "path": "Code/scripts/metrics/Results/SS/mean/mdeam_mean.tab",
+      "bytes": 86385,
+      "md5": "9096e5798a9890ccf12e8a0ceaa6b324",
+      "download_format": "original",
+      "uploaded_name": "mdeam_mean.csv"
+    },
+    {
+      "id": 197979,
+      "path": "Code/scripts/metrics/Results/SS/mean/mdeam_mean.txt",
+      "bytes": 5328,
+      "md5": "df312a754c11524adcf0a51c4f89f0a9",
+      "download_format": "original"
+    },
+    {
+      "id": 198037,
+      "path": "Code/scripts/metrics/Results/SS/mean/mdsem_mean.tab",
+      "bytes": 374260,
+      "md5": "6e17daacfe83f6afdaab512473984a5b",
+      "download_format": "original",
+      "uploaded_name": "mdsem_mean.csv"
+    },
+    {
+      "id": 198085,
+      "path": "Code/scripts/metrics/Results/SS/mean/mdsem_mean.txt",
+      "bytes": 5328,
+      "md5": "1063fda8d107585b43c427b6d1fa19ee",
+      "download_format": "original"
+    },
+    {
+      "id": 198073,
+      "path": "Code/scripts/metrics/Results/SS/mean/nc2020_mean.tab",
+      "bytes": 9303,
+      "md5": "d0d7c7cc367870b31fb67832082aca7f",
+      "download_format": "original",
+      "uploaded_name": "nc2020_mean.csv"
+    },
+    {
+      "id": 198084,
+      "path": "Code/scripts/metrics/Results/SS/mean/nc2020_mean.txt",
+      "bytes": 5328,
+      "md5": "e0d6428cd029787b4efc6789bd6ca16d",
+      "download_format": "original"
+    },
+    {
+      "id": 197999,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_DVS_GTindiv_5s.txt",
+      "bytes": 5328,
+      "md5": "a2627c9134400ef4bf822bac905f0275",
+      "download_format": "original"
+    },
+    {
+      "id": 198052,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_GTindiv_baseline_5s.txt",
+      "bytes": 5328,
+      "md5": "d0b40f35c4393e8b065e3db73533e273",
+      "download_format": "original"
+    },
+    {
+      "id": 198002,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_GTindiv_nsample_5s.txt",
+      "bytes": 5328,
+      "md5": "ef46b889acfc1296331dc2eba7f8838d",
+      "download_format": "original"
+    },
+    {
+      "id": 198005,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_MDSEM_GTindiv_5s.txt",
+      "bytes": 5328,
+      "md5": "1063fda8d107585b43c427b6d1fa19ee",
+      "download_format": "original"
+    },
+    {
+      "id": 197981,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_Saltinet_GTindiv_5s.txt",
+      "bytes": 5328,
+      "md5": "9f44d76fa6f6bd930414d08f6ce036b8",
+      "download_format": "original"
+    },
+    {
+      "id": 197990,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_human_GTindiv_5s.txt",
+      "bytes": 5328,
+      "md5": "ff024f0d5aeadc12dfdd6a2e2a54a707",
+      "download_format": "original"
+    },
+    {
+      "id": 198087,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_tsv_GTindiv_5s.txt",
+      "bytes": 5328,
+      "md5": "d0b40f35c4393e8b065e3db73533e273",
+      "download_format": "original"
+    },
+    {
+      "id": 197980,
+      "path": "Code/scripts/metrics/Results/SS/stringsim_tsv_GTindiv_5s_nsamples.txt",
+      "bytes": 5328,
+      "md5": "ef46b889acfc1296331dc2eba7f8838d",
+      "download_format": "original"
+    },
+    {
+      "id": 198022,
+      "path": "Code/scripts/metrics/Results/dtw/UMSS_mean.tab",
+      "bytes": 336882,
+      "md5": "74c541a8c89bfb59f74d29405d368730",
+      "download_format": "original",
+      "uploaded_name": "UMSS_mean.csv"
+    },
+    {
+      "id": 198057,
+      "path": "Code/scripts/metrics/Results/dtw/UMSS_new_mean.tab",
+      "bytes": 336930,
+      "md5": "dab1238291ca2896422344bd01b38279",
+      "download_format": "original",
+      "uploaded_name": "UMSS_new_mean.csv"
+    },
+    {
+      "id": 198041,
+      "path": "Code/scripts/metrics/Results/dtw/mdeam_mean.tab",
+      "bytes": 337837,
+      "md5": "ba1cca9382dc39e4e6f6c3fcc898f259",
+      "download_format": "original",
+      "uploaded_name": "mdeam_mean.csv"
+    },
+    {
+      "id": 198043,
+      "path": "Code/scripts/metrics/Results/scanmatch/DVS_mean.tab",
+      "bytes": 112095,
+      "md5": "27abef75a0809c8236bcc20f5f966450",
+      "download_format": "original",
+      "uploaded_name": "DVS_mean.csv"
+    },
+    {
+      "id": 198067,
+      "path": "Code/scripts/metrics/Results/scanmatch/UMSS_mean.tab",
+      "bytes": 112095,
+      "md5": "330461795d1d3bcb254cffaf506422e7",
+      "download_format": "original",
+      "uploaded_name": "UMSS_mean.csv"
+    },
+    {
+      "id": 198032,
+      "path": "Code/scripts/metrics/Results/scanmatch/saltinet_mean.tab",
+      "bytes": 112095,
+      "md5": "450ccd545dc9e7140a969614e581cdfe",
+      "download_format": "original",
+      "uploaded_name": "saltinet_mean.csv"
+    },
+    {
+      "id": 198011,
+      "path": "Code/scripts/metrics/__init__.py",
+      "bytes": 0,
+      "md5": "d41d8cd98f00b204e9800998ecf8427e",
+      "download_format": "original"
+    },
+    {
+      "id": 198048,
+      "path": "Code/scripts/metrics/best_metrics_DCSM.py",
+      "bytes": 2575,
+      "md5": "57337cfd7e1b1a639140ad74541dfbb4",
+      "download_format": "original"
+    },
+    {
+      "id": 197986,
+      "path": "Code/scripts/metrics/best_metrics_human_GTindividual.py",
+      "bytes": 2208,
+      "md5": "4b0707e1bbdf56e0a818cc372bd24a6f",
+      "download_format": "original"
+    },
+    {
+      "id": 197987,
+      "path": "Code/scripts/metrics/best_metrics_pathgan_csv_GTindividual.py",
+      "bytes": 2464,
+      "md5": "f6dd041f662e7b19107e5d9e1f59d8bd",
+      "download_format": "original"
+    },
+    {
+      "id": 197997,
+      "path": "Code/scripts/metrics/best_metrics_saltinet_csv_GTindividual.py",
+      "bytes": 3766,
+      "md5": "3d3cdfff7a2e5fb650699ee50ae83b36",
+      "download_format": "original"
+    },
+    {
+      "id": 198076,
+      "path": "Code/scripts/metrics/best_stringsim_Human_GT_sum.py",
+      "bytes": 761,
+      "md5": "494ffb4c2bc7f8b3310cc4f4f7c5fa49",
+      "download_format": "original"
+    },
+    {
+      "id": 198023,
+      "path": "Code/scripts/metrics/best_stringsim_tsv_GTindividual.py",
+      "bytes": 2657,
+      "md5": "4d36530a0b669e417f1832135718f59f",
+      "download_format": "original"
+    },
+    {
+      "id": 198063,
+      "path": "Code/scripts/metrics/exnorm.png",
+      "bytes": 26134,
+      "md5": "cf4c23f469c3493cea236b2e289d07f3",
+      "download_format": "original"
+    },
+    {
+      "id": 198059,
+      "path": "Code/scripts/metrics/exponnorm_estimation.py",
+      "bytes": 2308,
+      "md5": "b45380be9a95e517b2e0d439d92c4215",
+      "download_format": "original"
+    },
+    {
+      "id": 197998,
+      "path": "Code/scripts/metrics/metrics.py",
+      "bytes": 26311,
+      "md5": "281554fb8b761cbfdea7e8aedb766a7f",
+      "download_format": "original"
+    },
+    {
+      "id": 198029,
+      "path": "Code/scripts/metrics/metrics_DCSM.py",
+      "bytes": 2511,
+      "md5": "96774bfd9de7f13121dd505b7cf837bd",
+      "download_format": "original"
+    },
+    {
+      "id": 198003,
+      "path": "Code/scripts/metrics/metrics_human_GTindividual.py",
+      "bytes": 2416,
+      "md5": "2827c0fb932525ac9bb968aeb658829a",
+      "download_format": "original"
+    },
+    {
+      "id": 198033,
+      "path": "Code/scripts/metrics/metrics_npz_GTindividual.py",
+      "bytes": 2365,
+      "md5": "e69c95b57a85f006320c9824ca4b327d",
+      "download_format": "original"
+    },
+    {
+      "id": 198079,
+      "path": "Code/scripts/metrics/metrics_pathgan_csv_GTindividual.py",
+      "bytes": 2361,
+      "md5": "f37934475bafd8c27bf1a93c00306ea8",
+      "download_format": "original"
+    },
+    {
+      "id": 198024,
+      "path": "Code/scripts/metrics/metrics_saltinet_csv_GTindividual.py",
+      "bytes": 4409,
+      "md5": "36efb6061033ed9025bcccda07f61236",
+      "download_format": "original"
+    },
+    {
+      "id": 198081,
+      "path": "Code/scripts/metrics/metrics_tsv_GTindividual.py",
+      "bytes": 2364,
+      "md5": "c1cc0d3e32979c8583b4adf2409c3e71",
+      "download_format": "original"
+    },
+    {
+      "id": 198094,
+      "path": "Code/scripts/metrics/saliency_saltinet_csv.py",
+      "bytes": 3375,
+      "md5": "cb0819060f89b464a5c31eb3ad5a4fe1",
+      "download_format": "original"
+    },
+    {
+      "id": 198010,
+      "path": "Code/scripts/metrics/stringsim_GTindiv_nsamples_5s_new.txt",
+      "bytes": 5328,
+      "md5": "66d8130bec540cfcbdc458e13eeed184",
+      "download_format": "original"
+    },
+    {
+      "id": 198000,
+      "path": "Code/scripts/metrics/stringsim_Human_GT_individual.py",
+      "bytes": 914,
+      "md5": "6dda482f9d626f36a911410e8d762b53",
+      "download_format": "original"
+    },
+    {
+      "id": 198074,
+      "path": "Code/scripts/metrics/stringsim_Human_GT_sum.py",
+      "bytes": 667,
+      "md5": "502b21123e1a562a72c54df4a1dfe2e7",
+      "download_format": "original"
+    },
+    {
+      "id": 198080,
+      "path": "Code/scripts/metrics/stringsim_tsv_GTindividual.py",
+      "bytes": 2604,
+      "md5": "088700e00590f233aa1cd7193bb3f422",
+      "download_format": "original"
+    },
+    {
+      "id": 198021,
+      "path": "Code/scripts/metrics/utils.py",
+      "bytes": 5180,
+      "md5": "1720cc75379776b37deb6b4dd0a27794",
+      "download_format": "original"
+    },
+    {
+      "id": 198062,
+      "path": "Code/scripts/multimatch/README",
+      "bytes": 967,
+      "md5": "ed4d0976f7e62afed9102d3464c47cf3",
+      "download_format": "original"
+    },
+    {
+      "id": 197972,
+      "path": "Code/scripts/multimatch/hungarian.py",
+      "bytes": 19640,
+      "md5": "c1c8c216fb40922c78d1a1560efb2d78",
+      "download_format": "original"
+    },
+    {
+      "id": 198078,
+      "path": "Code/scripts/multimatch/massvis_hungarian.py",
+      "bytes": 2265,
+      "md5": "e6c1d535ece030541f6c5f9df20814f5",
+      "download_format": "original"
+    },
+    {
+      "id": 197989,
+      "path": "Code/scripts/multimatch/mm_massvis_human_GTindividual.py",
+      "bytes": 2863,
+      "md5": "3dbc14838bfc7c327dd92ad324639c54",
+      "download_format": "original"
+    },
+    {
+      "id": 198019,
+      "path": "Code/scripts/multimatch/mm_massvis_nc2020_csv_GTindividual.py",
+      "bytes": 3387,
+      "md5": "2a3ecf15acb6069a1dcccefa213fe3f9",
+      "download_format": "original"
+    },
+    {
+      "id": 198012,
+      "path": "Code/scripts/multimatch/mm_massvis_npz_GTindividual.py",
+      "bytes": 3033,
+      "md5": "720fcdc99f63ea15bb0941c7bc9ee13d",
+      "download_format": "original"
+    },
+    {
+      "id": 198036,
+      "path": "Code/scripts/multimatch/mm_massvis_pathgan_csv_GTindividual.py",
+      "bytes": 2627,
+      "md5": "1c5ee5ddec543e942fe1fd0341897a9e",
+      "download_format": "original"
+    },
+    {
+      "id": 198051,
+      "path": "Code/scripts/multimatch/mm_massvis_pathganoffi_csv_GTindividual.py",
+      "bytes": 2775,
+      "md5": "74fe8ce84a6b2be51ea9e3596e587702",
+      "download_format": "original"
+    },
+    {
+      "id": 197988,
+      "path": "Code/scripts/multimatch/mm_massvis_saltinet_csv_GTindividual.py",
+      "bytes": 3700,
+      "md5": "e9f5b3aba793b042ad4618f98a29d827",
+      "download_format": "original"
+    },
+    {
+      "id": 198031,
+      "path": "Code/scripts/multimatch/mm_massvis_tsv_GTindividual.py",
+      "bytes": 2823,
+      "md5": "8318d797c186d01099a03058eb431fb7",
+      "download_format": "original"
+    },
+    {
+      "id": 197982,
+      "path": "Code/scripts/multimatch/multimatch.py",
+      "bytes": 44954,
+      "md5": "d645bb22aee46da1cb968e85198691e8",
+      "download_format": "original"
+    },
+    {
+      "id": 198046,
+      "path": "Code/scripts/preprocess/0_gt2tsv.py",
+      "bytes": 1705,
+      "md5": "fb499d2a869bd18304faa8fd1fe2aa98",
+      "download_format": "original"
+    },
+    {
+      "id": 197984,
+      "path": "Code/scripts/preprocess/0_gt_indiv2npz.py",
+      "bytes": 2677,
+      "md5": "70bf48a365af6ff9337d0463ddaf3aae",
+      "download_format": "original"
+    },
+    {
+      "id": 197985,
+      "path": "Code/scripts/preprocess/1_csv2tsv.py",
+      "bytes": 2571,
+      "md5": "53cf85511322a7940f25df442cee986b",
+      "download_format": "original"
+    },
+    {
+      "id": 198072,
+      "path": "Code/scripts/preprocess/1_csv2tsv_pathgan.py",
+      "bytes": 1306,
+      "md5": "2693b43bb401288df4de7d6c12a34d2b",
+      "download_format": "original"
+    },
+    {
+      "id": 198101,
+      "path": "Code/scripts/preprocess/2_npz2tsv.py",
+      "bytes": 1056,
+      "md5": "92ba71b1a38c947b6925e40586cad220",
+      "download_format": "original"
+    },
+    {
+      "id": 198044,
+      "path": "Code/scripts/preprocess/3_pathgantsv2str.py",
+      "bytes": 1924,
+      "md5": "2dbe0252ae16b1223606b48b7f1bb007",
+      "download_format": "original"
+    },
+    {
+      "id": 198100,
+      "path": "Code/scripts/preprocess/3_tsv2str.py",
+      "bytes": 2959,
+      "md5": "648ecec1393306eee3784774ebe79ed1",
+      "download_format": "original"
+    },
+    {
+      "id": 197977,
+      "path": "Code/scripts/preprocess/change_column.py",
+      "bytes": 949,
+      "md5": "2f8b06f9a1f0b00f5de77bd8c5f6ce2d",
+      "download_format": "original"
+    },
+    {
+      "id": 198038,
+      "path": "Code/scripts/preprocess/gt_stats.py",
+      "bytes": 1751,
+      "md5": "f7d1015573209c2b7c3beb881c21b4f9",
+      "download_format": "original"
+    },
+    {
+      "id": 198091,
+      "path": "Code/scripts/preprocess/split_massvis.py",
+      "bytes": 2948,
+      "md5": "944897042a64a286c57d23ff36a7c2a7",
+      "download_format": "original"
+    },
+    {
+      "id": 198099,
+      "path": "Code/scripts/preprocess/tsv_coord.py",
+      "bytes": 2292,
+      "md5": "f3b32bc9eb8f8b5dcb5bdae2b8b97019",
+      "download_format": "original"
+    },
+    {
+      "id": 197995,
+      "path": "Code/scripts/preprocess_utils.py",
+      "bytes": 7004,
+      "md5": "89d24b7e0e2bb24186f3e80e71ba6dd5",
+      "download_format": "original"
+    },
+    {
+      "id": 198006,
+      "path": "Code/scripts/requirements.txt",
+      "bytes": 4556,
+      "md5": "b93a7929df6b36b404853bd90611865c",
+      "download_format": "original"
+    },
+    {
+      "id": 198045,
+      "path": "Code/scripts/saliency/abl.npz",
+      "bytes": 5064,
+      "md5": "6d89c2a00461b28d9a6fc67b53a0a15f",
+      "download_format": "original"
+    },
+    {
+      "id": 198077,
+      "path": "Code/scripts/saliency/cmb.npz",
+      "bytes": 5064,
+      "md5": "a06b0528a206608bebf1484bacb03c4c",
+      "download_format": "original"
+    },
+    {
+      "id": 197991,
+      "path": "Code/scripts/saliency/csv/dvs_3s.tab",
+      "bytes": 8898,
+      "md5": "2636cfd594c7e3edf51158824a77cce9",
+      "download_format": "original",
+      "uploaded_name": "dvs_3s.csv"
+    },
+    {
+      "id": 198040,
+      "path": "Code/scripts/saliency/csv/dvs_5s.tab",
+      "bytes": 8891,
+      "md5": "87c5c0a2a7aed83fae2f70e3af140ebf",
+      "download_format": "original",
+      "uploaded_name": "dvs_5s.csv"
+    },
+    {
+      "id": 197971,
+      "path": "Code/scripts/saliency/csv/mdeam_3s.tab",
+      "bytes": 8842,
+      "md5": "620d5f7709c67d7a2257d0059106eb02",
+      "download_format": "original",
+      "uploaded_name": "mdeam_3s.csv"
+    },
+    {
+      "id": 198096,
+      "path": "Code/scripts/saliency/csv/mdeam_5s.tab",
+      "bytes": 8889,
+      "md5": "058d7932e4f1099738313d1592f3043e",
+      "download_format": "original",
+      "uploaded_name": "mdeam_5s.csv"
+    },
+    {
+      "id": 198083,
+      "path": "Code/scripts/saliency/dur.npz",
+      "bytes": 112264,
+      "md5": "9b57cbdf033e4de9b5dfd36a4810fdf3",
+      "download_format": "original"
+    },
+    {
+      "id": 198015,
+      "path": "Code/scripts/saliency/eval.py",
+      "bytes": 30204,
+      "md5": "e8fbb74059e30cccbf2d0c78436c1eb7",
+      "download_format": "original"
+    },
+    {
+      "id": 198034,
+      "path": "Code/scripts/saliency/eval_dvs.py",
+      "bytes": 1941,
+      "md5": "528ee5b6411e317d0500270d33c6f7ba",
+      "download_format": "original"
+    },
+    {
+      "id": 198017,
+      "path": "Code/scripts/saliency/eval_mdeam.py",
+      "bytes": 1899,
+      "md5": "72f039bd8ea32b59f9fb8ababb88d7dc",
+      "download_format": "original"
+    },
+    {
+      "id": 198053,
+      "path": "Code/scripts/saliency/fixation_all_analysis.ipynb",
+      "bytes": 97368,
+      "md5": "1ec30d9715716226d8630109bd298ec8",
+      "download_format": "original"
+    },
+    {
+      "id": 197974,
+      "path": "Code/scripts/saliency/fixation_individual_analysis.ipynb",
+      "bytes": 34199,
+      "md5": "e41511cd4b17d27e3f6e20f8cb210af8",
+      "download_format": "original"
+    },
+    {
+      "id": 198066,
+      "path": "Code/scripts/saliency/fixation_sum_analysis_overlap.py",
+      "bytes": 4296,
+      "md5": "27cfbd6871789d1819ee20c8cbb451be",
+      "download_format": "original"
+    },
+    {
+      "id": 198042,
+      "path": "Code/scripts/saliency/fixation_sum_analysis_overlap_area.py",
+      "bytes": 1978,
+      "md5": "e3c0fa51890af72efee94260a46a943e",
+      "download_format": "original"
+    },
+    {
+      "id": 198092,
+      "path": "Code/scripts/saliency/lcm.npz",
+      "bytes": 5064,
+      "md5": "618fed21d9eb067c974d941cd4500acb",
+      "download_format": "original"
+    },
+    {
+      "id": 198028,
+      "path": "Code/scripts/saliency/ls.npz",
+      "bytes": 5064,
+      "md5": "b525e0374f62f2b1f4fe729da3b07c94",
+      "download_format": "original"
+    },
+    {
+      "id": 198082,
+      "path": "Code/scripts/saliency/mg.npz",
+      "bytes": 5064,
+      "md5": "6df5b3d3db7897c5819d9ac574c446ee",
+      "download_format": "original"
+    },
+    {
+      "id": 198016,
+      "path": "Code/scripts/saliency/pi.npz",
+      "bytes": 5064,
+      "md5": "860a90f61a97f7cefdb868b585ef03bf",
+      "download_format": "original"
+    },
+    {
+      "id": 197983,
+      "path": "Code/scripts/saliency/plot_heatmap.py",
+      "bytes": 1551,
+      "md5": "3275d8ac1db0de2a705b41630e3291f8",
+      "download_format": "original"
+    },
+    {
+      "id": 198030,
+      "path": "Code/scripts/saliency/polygon_util.py",
+      "bytes": 1717,
+      "md5": "8a7884d468dee349ee275dc618287ff0",
+      "download_format": "original"
+    },
+    {
+      "id": 198069,
+      "path": "Code/scripts/saliency/rb.npz",
+      "bytes": 5064,
+      "md5": "53349cdaf105cb055d5f87c82167767d",
+      "download_format": "original"
+    },
+    {
+      "id": 198009,
+      "path": "Code/scripts/saliency/rk.npz",
+      "bytes": 5064,
+      "md5": "26c83414605657efbb327990019dd652",
+      "download_format": "original"
+    },
+    {
+      "id": 198071,
+      "path": "Code/scripts/saliency/sal_imp_utilities.py",
+      "bytes": 35206,
+      "md5": "7c480f990b478cd870bc8f705aef3970",
+      "download_format": "original"
+    },
+    {
+      "id": 198035,
+      "path": "Code/scripts/saliency/saliency_toolbox.ipynb",
+      "bytes": 169586,
+      "md5": "aa9a5fa964491b46aa624d28071f4d2f",
+      "download_format": "original"
+    },
+    {
+      "id": 198025,
+      "path": "Code/scripts/saliency/sok.npz",
+      "bytes": 5064,
+      "md5": "53561c5b4735c5ff611b03d99e815d04",
+      "download_format": "original"
+    },
+    {
+      "id": 198018,
+      "path": "Code/scripts/saliency/wab.npz",
+      "bytes": 5064,
+      "md5": "0372f825c277952ff27d57210b6897c3",
+      "download_format": "original"
+    },
+    {
+      "id": 238497,
+      "path": "Code/scripts/src/attentive_convlstm_new.py",
+      "bytes": 30071,
+      "md5": "e5810957b65db7b2d05c1baf124db235",
+      "download_format": "original"
+    },
+    {
+      "id": 238494,
+      "path": "Code/scripts/src/cb.py",
+      "bytes": 2541,
+      "md5": "5c89f2f4bcbc8ece3662b0c86dee047e",
+      "download_format": "original"
+    },
+    {
+      "id": 238493,
+      "path": "Code/scripts/src/classif_capable_models.py",
+      "bytes": 22820,
+      "md5": "0f341a3c7bf9e29896bb0d93aeb128b0",
+      "download_format": "original"
+    },
+    {
+      "id": 238491,
+      "path": "Code/scripts/src/data_loading.py",
+      "bytes": 21635,
+      "md5": "e94e104658a8ebd452a35453950fa3f5",
+      "download_format": "original"
+    },
+    {
+      "id": 238495,
+      "path": "Code/scripts/src/dcn_resnet_new.py",
+      "bytes": 9565,
+      "md5": "cc3d2204ee37478656223a43ea4a8504",
+      "download_format": "original"
+    },
+    {
+      "id": 238490,
+      "path": "Code/scripts/src/gaussian_prior_new.py",
+      "bytes": 9502,
+      "md5": "58032158181a246f9923e8927bb902b4",
+      "download_format": "original"
+    },
+    {
+      "id": 238489,
+      "path": "Code/scripts/src/losses_keras2.py",
+      "bytes": 9880,
+      "md5": "863434473e3b904ab18aa359c4bd3775",
+      "download_format": "original"
+    },
+    {
+      "id": 238487,
+      "path": "Code/scripts/src/multiduration_models.py",
+      "bytes": 25212,
+      "md5": "9cfeecb40ab06f44acb05ac1f67616bc",
+      "download_format": "original"
+    },
+    {
+      "id": 238496,
+      "path": "Code/scripts/src/saltinet_util.py",
+      "bytes": 6755,
+      "md5": "362cd5d0c7d2daab6523cff23eb3a9d2",
+      "download_format": "original"
+    },
+    {
+      "id": 238492,
+      "path": "Code/scripts/src/util.py",
+      "bytes": 2535,
+      "md5": "e0ba3b04aeb80cf118771f12cd2463af",
+      "download_format": "original"
+    },
+    {
+      "id": 238488,
+      "path": "Code/scripts/src/visualization_functions.py",
+      "bytes": 8804,
+      "md5": "c9244d38b58d060bf4a67d15290df8bd",
+      "download_format": "original"
+    },
+    {
+      "id": 238486,
+      "path": "Code/scripts/src/xception_custom.py",
+      "bytes": 14292,
+      "md5": "c94dea75ef2c5e2eda6a1ac97bfe3ea4",
+      "download_format": "original"
+    },
+    {
+      "id": 198058,
+      "path": "Code/scripts/visualization/plot_element_map.py",
+      "bytes": 1473,
+      "md5": "977c8b42a1c072684804647a88c51d27",
+      "download_format": "original"
+    },
+    {
+      "id": 198086,
+      "path": "Code/scripts/visualization/plot_individual.py",
+      "bytes": 2111,
+      "md5": "ecbb6128568083eeda19c2dac648efdf",
+      "download_format": "original"
+    },
+    {
+      "id": 198056,
+      "path": "Code/scripts/visualization/tsv_visualization.py",
+      "bytes": 2310,
+      "md5": "c54585d8872dc89d77c779e8164d7506",
+      "download_format": "original"
+    },
+    {
+      "id": 198050,
+      "path": "Code/scripts/visualization/visualization_utils.py",
+      "bytes": 1686,
+      "md5": "2d4c8085527a819e2e8da423ea6b3d64",
+      "download_format": "original"
+    },
+    {
+      "id": 197973,
+      "path": "Data/Baselines/DCSM.zip",
+      "bytes": 294195907,
+      "md5": "dea43e89d3f430d28d2e87031341e920",
+      "download_format": "original"
+    },
+    {
+      "id": 198001,
+      "path": "Data/Baselines/DVS.zip",
+      "bytes": 481244317,
+      "md5": "0b8ed4b8e67a686a59f5550cb88b99f1",
+      "download_format": "original"
+    },
+    {
+      "id": 197976,
+      "path": "Data/Baselines/MASSVIS-MDEFD.zip",
+      "bytes": 174091004,
+      "md5": "e536d366e0e1312c7b58a162374016cd",
+      "download_format": "original"
+    },
+    {
+      "id": 198095,
+      "path": "Data/Baselines/PathGAN.zip",
+      "bytes": 19488002,
+      "md5": "198aee0bbf1774b0b5759c47e8774950",
+      "download_format": "original"
+    },
+    {
+      "id": 198090,
+      "path": "Data/Baselines/Saltinet.zip",
+      "bytes": 213369338,
+      "md5": "ea41a0fa3bad9540e4e58dd78688e1e4",
+      "download_format": "original"
+    },
+    {
+      "id": 198065,
+      "path": "Data/UMSS/GT_EFD_500_2000_5000.zip",
+      "bytes": 165240995,
+      "md5": "eebf2837c727e22a1ff9b660d404abfb",
+      "download_format": "original"
+    },
+    {
+      "id": 198061,
+      "path": "Data/UMSS/UMSS.zip",
+      "bytes": 189451123,
+      "md5": "f4cac1e4c551ee756aca132e3a585a08",
+      "download_format": "original"
+    },
+    {
+      "id": 198093,
+      "path": "README.md",
+      "bytes": 1438,
+      "md5": "62c52143da13a7c3a4b95100c1ca7f95",
+      "download_format": "original"
+    },
+    {
+      "id": 198026,
+      "path": "Study/ResultFinal.tab",
+      "bytes": 2823,
+      "md5": "7c36eef1e85d8a61b278158ba25ba0b5",
+      "download_format": "original",
+      "uploaded_name": "ResultFinal.csv"
+    },
+    {
+      "id": 198020,
+      "path": "Study/ResultFinal_stats.tab",
+      "bytes": 2949,
+      "md5": "0b5517ccb18fa5cdc929dcb94039c6e1",
+      "download_format": "original",
+      "uploaded_name": "ResultFinal_stats.csv"
+    },
+    {
+      "id": 197994,
+      "path": "Study/StudyResult.csv",
+      "bytes": 2726,
+      "md5": "ae04863dcdd4aade97eb17f2407099f4",
+      "download_format": "original"
+    },
+    {
+      "id": 198039,
+      "path": "Study/decodeLatinSquare.py",
+      "bytes": 1190,
+      "md5": "1ce882ddf2313fcb93f5c802a2c947ef",
+      "download_format": "original"
+    },
+    {
+      "id": 198047,
+      "path": "Study/generated_gifs.zip",
+      "bytes": 321138199,
+      "md5": "0c01a190a21ac1cfa3cccd8544e727dc",
+      "download_format": "original"
+    },
+    {
+      "id": 197970,
+      "path": "Study/latin_square_5conditions.tab",
+      "bytes": 400,
+      "md5": "61f7cdaf456f71cbb954d37ead293768",
+      "download_format": "original",
+      "uploaded_name": "latin_square_5conditions.csv"
+    },
+    {
+      "id": 198014,
+      "path": "Study/statistics.py",
+      "bytes": 832,
+      "md5": "e4f0657efe4260a3adbcb76f6e8ca7c0",
+      "download_format": "original"
+    }
+  ]
+}

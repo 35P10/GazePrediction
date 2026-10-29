@@ -1,0 +1,50 @@
+{
+  "paper": "Wang, Bâce, Bulling. Scanpath Prediction on Information Visualisations. IEEE TVCG 2023. doi:10.1109/TVCG.2023.3242293",
+  "paper_pdf": "https://www.collaborative-ai.org/publications/wang23_tvcg.pdf",
+  "supplement": "https://arxiv.org/abs/2112.02340v2",
+  "deposit": "doi:10.18419/DARUS-3361 (version 2.0)",
+  "retrieved_date": "2026-10-20",
+  "github": [
+    {
+      "url": "https://raw.githubusercontent.com/massvis/eyetracking/3022279566ceddeca909fc18366406e26aca64a2/csv_files/fixationsByVis.zip",
+      "sha256": "cfa713dfd9c647813a3b5c071a4e9e654f1c6840fd2128466d7eec088c81d792",
+      "use": "MASSVIS human fixations"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/massvis/dataset/e093a69d8e9f156a51f6d458a4bdf543e2b35675/csv_files/targets393_elementLabels.zip",
+      "sha256": "7cabad2cbb41fe88555139dcee04ef8a75f13b61a01187290eff9e5fff33ac8e",
+      "use": "MASSVIS element annotations"
+    }
+  ],
+  "paper_values": {
+    "table2": {
+      "3s": {
+        "NSS": 1.406,
+        "CC": 0.586,
+        "KL": 0.754,
+        "SIM": 0.516
+      },
+      "5s": {
+        "NSS": 1.024,
+        "CC": 0.514,
+        "KL": 0.689,
+        "SIM": 0.53
+      }
+    },
+    "table1": {
+      "SS_mean": 0.446,
+      "SS_best": 0.724,
+      "ScanMatch_mean": 0.387,
+      "ScanMatch_best": 0.503,
+      "sTDE_mean": 0.906,
+      "sTDE_best": 0.925,
+      "DTW_mean": 6529.11,
+      "DTW_best": 4683.44,
+      "MM_shape": 0.943,
+      "MM_direction": 0.728,
+      "MM_length": 0.935,
+      "MM_position": 0.771,
+      "MM_duration": 0.712
+    }
+  }
+}
