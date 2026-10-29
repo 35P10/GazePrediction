@@ -1,0 +1,41 @@
+id,chart,task,question,has
+1,economist_daily_chart_35,retrieve_value,How many paralympic competitors per million population does France have?,1
+2,economist_daily_chart_35,retrieve_value,How many paralympic competitors per million population does Finland have?,0
+3,economist_daily_chart_35,retrieve_value,How many paralympic competitors per million population does Germany have?,0
+4,economist_daily_chart_35,retrieve_value,How many paralympic competitors per million population does China have?,0
+5,economist_daily_chart_35,retrieve_value,How many paralympic competitors per million population does Canada have?,0
+6,economist_daily_chart_35,filter,Which countries have more than 10 paralympic competitors per million population?,1
+7,economist_daily_chart_35,filter,Which countries have 15 paralympic competitors per million population?,0
+8,economist_daily_chart_35,filter,Which countries have 5 paralympic competitors per million population?,0
+9,economist_daily_chart_35,find_extreme,Which country has most paralympic competitors per million population?,1
+10,economist_daily_chart_35,find_extreme,Which country has least paralympic competitors per million population?,0
+1,economist_daily_chart_85,retrieve_value,What is the attendance of Universal Studios Hollywood?,1
+2,economist_daily_chart_85,retrieve_value,What is the attendance of Disneyland Park (France)?,0
+3,economist_daily_chart_85,retrieve_value,What is the attendance of Ocean Park (Hongkong)?,0
+4,economist_daily_chart_85,retrieve_value,What is the attendance of Nagashima Spa Land (Japan)?,0
+5,economist_daily_chart_85,retrieve_value,What is the attendance of Hollywood Studios at Walt Disney World (US)?,0
+6,economist_daily_chart_85,filter,Which theme parks had more than 15 million attendance in 2011?,1
+7,economist_daily_chart_85,filter,Which theme parks had 10 million attendance in 2011?,0
+8,economist_daily_chart_85,filter,Which theme parks had 5 million attendance in 2011?,0
+9,economist_daily_chart_85,find_extreme,Which theme park had the highest attendance in 2011?,1
+10,economist_daily_chart_85,find_extreme,Which theme park had the lowest attendance in 2011?,0
+1,economist_daily_chart_165,retrieve_value,How many deceased organ donors per million population does Brazil have?,1
+2,economist_daily_chart_165,retrieve_value,How many deceased organ donors per million population does United States have?,0
+3,economist_daily_chart_165,retrieve_value,How many deceased organ donors per million population does Britain have?,0
+4,economist_daily_chart_165,retrieve_value,How many deceased organ donors per million population does Netherlands have?,0
+5,economist_daily_chart_165,filter,Which country has 25 of deceased organ donors per million population?,1
+6,economist_daily_chart_165,filter,Which country has 20 of deceased organ donors per million population?,0
+7,economist_daily_chart_165,filter,Which country has 15 of deceased organ donors per million population?,0
+8,economist_daily_chart_165,filter,Which country has 10 of deceased organ donors per million population?,0
+9,economist_daily_chart_165,find_extreme,Which country has the highest number of living organ donors per million population?,0
+10,economist_daily_chart_165,find_extreme,Which country has the lowest number of living organ donors per million population?,1
+1,economist_daily_chart_392,retrieve_value,What was the earthquake magnitude in Kamchatka in 1952?,1
+2,economist_daily_chart_392,retrieve_value,What was the earthquake magnitude in Coast of Ecuador in 1906?,0
+3,economist_daily_chart_392,retrieve_value,"What was the earthquake magnitude in Andreanof Island, Alaska in 1957?",0
+4,economist_daily_chart_392,retrieve_value,What was the earthquake magnitude in Banda Sea Indonesia in 1938?,0
+5,economist_daily_chart_392,retrieve_value,What was the earthquake magnitude in Northern Sumatra Indonesia in 2005?,0
+6,economist_daily_chart_392,filter,Which earthquakes reached a magnitude of 9 and higher?,1
+7,economist_daily_chart_392,filter,Which earthquakes reached a magnitude of 8.75?,0
+8,economist_daily_chart_392,filter,Which earthquakes reached a magnitude of 8.50?,0
+9,economist_daily_chart_392,find_extreme,What was the largest earthquake since 1900?,1
+10,economist_daily_chart_392,find_extreme,What was the weakest earthquake since 1900?,0
