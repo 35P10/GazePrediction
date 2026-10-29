@@ -1,0 +1,1 @@
+artifacts/checkpoints/umss/md_eam_last_epoch.hdf5 filter=lfs diff=lfs merge=lfs -text
