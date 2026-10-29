@@ -64,6 +64,34 @@ class OfficialPipelineTests(unittest.TestCase):
             validation_data=state['gen_val'], max_queue_size=10, workers=5)
         np.testing.assert_allclose(learning_rates, [1e-4, 1e-4, 1e-5, 1e-5, 1e-5, 1e-6])
 
+    def test_export_writes_maps_that_umss_reads_and_reuses_them(self):
+        from models.umss import UMSS, export_maps
+        from models.umss.training.pipeline import predict as P
+        with tempfile.TemporaryDirectory() as temporary:
+            work = Path(temporary)
+            (work / 'images').mkdir()
+            image = work / 'images/chart.png'
+            Image.new('RGB', (80, 60)).save(image)
+            (work / 'ckpt').mkdir()
+            (work / 'ckpt/md_eam.hdf5').write_bytes(b'unused: inference is mocked')
+            with contextlib.redirect_stdout(io.StringIO()):
+                setup(work / 'upstream')
+            maps = [np.full((60, 80), value, dtype=np.float32) for value in (0.2, 0.4, 0.6)]
+            versions = {'keras': SimpleNamespace(__version__='mock'), 'tensorflow': SimpleNamespace(__version__='mock')}
+            args = SimpleNamespace(work=str(work), checkpoint=str(work / 'ckpt/md_eam.hdf5'),
+                                   images=str(work / 'images'), out=str(work / 'predictions/charts'))
+            chart_maps = Mock()
+            with patch.object(P, 'load_model', return_value=(None, None, None)), \
+                    patch.object(P, 'predict', return_value=maps), patch.object(P, 'save_chart_maps', chart_maps), \
+                    patch.dict('sys.modules', versions), contextlib.redirect_stdout(io.StringIO()):
+                P.export(args)
+            self.assertEqual(chart_maps.call_args.args[-1], Path(args.out) / 'png')
+            saved = UMSS(maps_dir=args.out).predict_maps(image)
+            self.assertEqual((saved['width'], saved['height']), (80, 60))
+            np.testing.assert_allclose(saved['maps'][:, 0, 0], [0.2, 0.4, 0.6])
+            with patch('subprocess.Popen', side_effect=AssertionError('the export should be reused')):
+                self.assertEqual(export_maps([image], 'charts', work=work), Path(args.out).resolve())
+
     def test_verify_rejects_modified_official_code(self):
         with tempfile.TemporaryDirectory() as temporary:
             destination = Path(temporary) / 'upstream'
@@ -107,13 +135,15 @@ class OfficialPipelineTests(unittest.TestCase):
             checkpoint = work / 'checkpoint.hdf5'
             checkpoint.write_bytes(b'unused: inference is mocked')
             # "Our" maps are the released ones, so both rows must match the published scores.
-            maps = [np.asarray(Image.open(R.RELEASED / 'salmaps' / f'{name}_{time}.png'), dtype=float) / 255
-                    for time in P.TIMES]
+            def released_maps(work, model, pre, post, image, folder):
+                for time in P.TIMES:
+                    shutil.copyfile(R.RELEASED / 'salmaps' / f'{name}_{time}.png', folder / f'{name}_{time}.png')
+
             with patch.object(P, 'load_model', return_value=(None, None, None)), \
-                    patch.object(P, 'predict', return_value=maps), contextlib.redirect_stdout(io.StringIO()):
+                    patch.object(P, 'save_chart_maps', released_maps), contextlib.redirect_stdout(io.StringIO()):
                 P.evaluate(SimpleNamespace(work=str(work), checkpoint=str(checkpoint)))
             with (work / 'predictions/paper_saliency_per_image.csv').open() as stream:
-                rows = [row for row in csv.DictReader(stream) if row['source'] == 'official']
+                rows = list(csv.DictReader(stream))
             published = R.published_saliency()
             for row in rows:
                 expected = published[f"{int(row['time']) // 1000}s"].iloc[0]

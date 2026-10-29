@@ -37,7 +37,7 @@ All paths below are relative to `UMSS_WORK`.
 | `verify` | Optional, separate: check sources and downloads against their pinned checksums. | — |
 | `check` | Regenerate the released EFD maps and require pixel-for-pixel agreement. | `datasets/check_500_2000_5000_10000/` |
 | `prepare` | Build the temporal training targets and fixation maps. | `datasets/massvis_bucket_500_3000_5000/` |
-| `train` | Fine-tune the model and select the lowest-validation-loss checkpoint. | `ckpt/` |
+| `train` | Fine-tune the model and keep the last epoch, as the authors' notebook does. | `ckpt/` |
 
 Downloads already present are reused; run `./run.sh verify` to check them. Run `check` before training to validate the data
 preparation. To check the training setup with one epoch after preparation:
@@ -46,8 +46,7 @@ preparation. To check the training setup with one epoch after preparation:
 ./run.sh train --epochs 1
 ```
 
-Use a fresh run directory when changing training settings; existing epoch files
-in `ckpt/` participate in checkpoint selection.
+Use a fresh run directory when changing training settings.
 
 ## Training settings
 
@@ -97,8 +96,11 @@ micro-batch size is recorded in `ckpt/md_eam.json`.
 |---|---|
 | `*_epXX_valloss*.hdf5` | Weights saved after each epoch |
 | `training_log.csv` | Training and validation losses by epoch |
-| `md_eam.hdf5` | Copy of the checkpoint with the lowest recorded validation loss |
-| `md_eam.json` | Selected checkpoint, epoch, validation loss and run settings |
+| `md_eam.hdf5` | Weights after the last epoch |
+| `md_eam.json` | Last epoch, run settings and the saved epoch files |
 
-All epoch checkpoints are retained. The paper does not specify which epoch was
-selected; choosing the lowest validation loss is our explicit selection rule.
+All epoch checkpoints are retained. The paper does not say which epoch it kept; the
+authors' notebook predicts with the model left after the last epoch, so `md_eam.hdf5` is that one.
+Record each kept checkpoint and its settings in
+[artifacts/checkpoints/umss](../../../artifacts/checkpoints/umss/README.md).
+It is not chosen on the validation images, which are also the Table 2 evaluation images.

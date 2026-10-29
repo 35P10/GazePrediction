@@ -4,26 +4,30 @@ evaluate: reports the paper's Table 2 metrics (NSS, CC, KL, SIM) at 3 and 5 seco
           against accumulated human fixations, for both our checkpoint and the
           released maps. Uses the shared official functions.
 export:   writes `<stem>.npz` files in the format `models.umss.UMSS(maps_dir=...)` reads,
-          so sampling can run on any machine without TensorFlow.
+          so sampling can run on any machine without TensorFlow, and `png/<stem>_<t>.png`,
+          the maps at the image size as the authors saved theirs (used to score Table 2).
 
 Inference uses the official md_sem network and pre/post-processing, as models/umss/model.py does.
 """
 import argparse
+import contextlib
 import csv
+import io
 import json
 import os
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
 if __package__:
     from models.umss.evaluation import saliency as S
-    from models.umss.reference.setup_umss import load_md_eam, sha256
+    from models.umss.reference.setup_umss import load_definitions, load_md_eam, sha256
 else:  # Standalone training Docker image.
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     from evaluation import saliency as S
-    from reference.setup_umss import load_md_eam, sha256
+    from reference.setup_umss import load_definitions, load_md_eam, sha256
 
 TIMES = [500, 3000, 5000]
 GRID = (480, 640)
@@ -40,6 +44,30 @@ def predict(model, preprocess, postprocess, path, height, width):
     if isinstance(predictions, list):
         predictions = predictions[0]
     return [postprocess(predictions[0, t, :, :, 0], height, width) for t in range(len(TIMES))]
+
+
+def save_chart_maps(work, model, preprocess, postprocess, image, folder):
+    """The official predict_and_save_md (eval.py): the three maps postprocessed to the image size,
+    min-max normalized and saved as 8-bit ``<stem>_<500|3000|5000>.png``, like the released maps."""
+    from PIL import Image
+    namespace = dict(np=np, os=os, Image=Image, tqdm=SimpleNamespace(tqdm=lambda items: items),
+                     preprocess_images=preprocess, postprocess_predictions=postprocess)
+    official = load_definitions(Path(work) / 'upstream', 'Code/scripts/saliency/eval.py',
+                                ('predict_and_save_md',), namespace)
+    with contextlib.redirect_stdout(io.StringIO()):  # it prints 'NOT BLURRING PREDICTIONS' per call
+        official['predict_and_save_md'](_OutputList(model), [str(image)], (240, 320), str(folder),
+                                        mode='singlestream')
+
+
+class _OutputList:
+    """predict_and_save_md reads preds[0][image][time]; md_sem with one output returns a bare array."""
+
+    def __init__(self, model):
+        self.model = model
+
+    def predict(self, images):
+        predictions = self.model.predict(images)
+        return predictions if isinstance(predictions, list) else [predictions]
 
 
 def evaluate(args):
@@ -60,11 +88,11 @@ def evaluate(args):
     for image in images:
         with Image.open(image) as im:
             width, height = im.size
-        maps = predict(model, pre, post, image, height, width)
+        save_chart_maps(work, model, pre, post, image, out)
         png_maps = {}
-        for time, prediction in zip(TIMES, maps):
-            png_maps[time] = np.uint8(np.clip(prediction, 0, 1) * 255)
-            Image.fromarray(png_maps[time]).save(out / f'{image.stem}_{time}.png')
+        for time in TIMES:
+            with Image.open(out / f'{image.stem}_{time}.png') as saved:
+                png_maps[time] = np.asarray(saved)
         files = sorted((humans / image.stem / 'enc').glob('*.csv'))
         if not files:
             raise FileNotFoundError('No human encoding fixations for ' + image.stem)
@@ -130,12 +158,14 @@ def export(args):
         np.savez_compressed(npz, maps=volume, width=width, height=height, image_sha256=image_hashes[image.stem],
                             checkpoint_sha256=checkpoint_hash, source_manifest_sha256=source_hash)
         npz_hashes[image.stem] = sha256(npz)
+        save_chart_maps(args.work, model, pre, post, image, out / 'png')
     metadata = dict(export_schema='umss-certified-maps-v1', checkpoint_sha256=checkpoint_hash,
                     source_manifest_sha256=source_hash, npz_sha256=npz_hashes, image_sha256=image_hashes,
                     tensorflow=tf.__version__, keras=keras.__version__, numpy=np.__version__,
                     python=platform.python_version(), platform=platform.platform(),
                     grid=list(GRID), input_shape=[240, 320, 3],
-                    preprocessing='upstream preprocess_images; postprocess_predictions; cv2 grid resize')
+                    preprocessing='upstream preprocess_images; postprocess_predictions; cv2 grid resize',
+                    chart_png='png/: upstream predict_and_save_md')
     temporary = out / 'export_metadata.json.part'
     temporary.write_text(json.dumps(metadata, indent=2) + '\n')
     temporary.replace(out / 'export_metadata.json')

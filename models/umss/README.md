@@ -7,7 +7,7 @@ Official sources: [paper/project](https://www.collaborative-ai.org/publications/
 [DaRUS V2](https://doi.org/10.18419/DARUS-3361). The authors' GPLv3 sources are downloaded separately;
 `reference/umss_sources.json` pins the published file identifiers and checksums.
 The repository contains a **retrained MD-EAM checkpoint**, not an author-released trained UMSS checkpoint.
-The existing [MASSVIS evaluation](../../reproductions/umss_massvis/README.md) documents reconstruction and validation limits.
+The [MASSVIS reproduction](../../reproductions/umss_massvis/README.md) compares S1 and S2 with the paper.
 
 ## Official vs. own code
 
@@ -31,7 +31,6 @@ python models/umss/reference/verify.py --work DIR    # a training run: upstream/
 ./models/umss/training/run.sh verify                  # the same inside the training container
 ```
 
-`reproductions/umss_massvis/validation` keeps its own checks of exported maps (`verify_maps`).
 
 ## Files and readiness
 
@@ -49,7 +48,9 @@ python models/umss/reference/verify.py --work DIR    # a training run: upstream/
   inference and the Docker pipeline, plus the file `sha256` helper.
 - The training reference preserves `Code/scripts/src/`, `Code/scripts/saliency/` and `Code/scripts/UMSS/` from the original repository. Training and inference import modules from those paths.
 - Official evaluation sources live in [official_repository/Code](../../reproductions/umss_massvis/official_repository/Code/); our adapter and evaluation helpers remain outside that folder.
-- `artifacts/checkpoints/umss/md_eam.hdf5`: retrained checkpoint via Git LFS (`git lfs pull` after cloning).
+- `artifacts/checkpoints/umss/`: retrained checkpoints via Git LFS (`git lfs pull` after cloning): `md_eam.hdf5`
+  (old, in use) and `md_eam_last_epoch.hdf5` (new). Their settings and results are in
+  [its README](../../artifacts/checkpoints/umss/README.md).
 - `training/`: existing Linux/NVIDIA Docker pipeline. See [setup](training/README.md).
 - Working files and run outputs: `artifacts/runs/umss/massvis_md_eam_validation/` by default; override with `UMSS_WORK`.
 - `tests/`: checks of sources/distributions, preprocessing, typed inputs, seeds and coordinate conversion.
@@ -107,7 +108,9 @@ Each `<image-stem>.npz` contains:
 The order is **0–0.5 s, 0.5–3 s, 3–5 s**. Upstream postprocessing removes the letterbox before
 resizing to the 640 × 480 sampling grid; the grid corresponds to the whole image.
 `predict_maps()` reads the maps and dimensions as stored. Docker exports additionally write
-`export_metadata.json` with checkpoint/source/image hashes and actual TensorFlow/Keras versions.
+`export_metadata.json` with checkpoint/source/image hashes and actual TensorFlow/Keras versions, and
+`png/<image-stem>_<500|3000|5000>.png`: the maps at the image size saved with the authors'
+`predict_and_save_md`, as their released maps (the MASSVIS reproduction scores these).
 Transfer that file with the NPZ files to preserve provenance.
 
 ```python

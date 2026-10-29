@@ -7,8 +7,8 @@ and fitting calls come from the original notebook. Runtime adaptations:
   * the notebook's InteractivePlot callback (live matplotlib plot) is replaced by a CSV log;
   * the generator class is imported explicitly (the notebook relies on a missing import);
   * optional seeds (the notebook sets none);
-  * after training, the epoch with the lowest validation loss is copied to md_eam.hdf5
-    (the paper does not say which epoch was kept; all epochs are saved as upstream does);
+  * after training, the weights of the last epoch are saved as md_eam.hdf5: the notebook predicts
+    with the model left in memory by fit_generator (all epochs are also saved, as upstream does);
   * `--micro-batch m` (< 8) for GPUs without room for 8 images: the same batch-8 Adam updates
     built from 8/m accumulated micro-batches (see accumulation.py; BatchNorm statistics differ).
 """
@@ -16,8 +16,6 @@ import argparse
 import json
 import os
 import random
-import re
-import shutil
 import sys
 from pathlib import Path
 
@@ -68,22 +66,15 @@ def main(args):
         wrap_generator = lambda generator: accumulation_sequence(
             generator, recipe['batch_size'], args.micro_batch)
     state = run_s1(repository, bindings, wrap_generator)
-    dataset = state['dataset']
 
-    # ---- choose the checkpoint used for inference ----
-    pattern = re.compile(r'_ep(\d+)_valloss(-?[\d.]+)\.hdf5$')
-    epochs = []
-    for f in os.listdir(ckpt_savedir):
-        m = pattern.search(f)
-        if m and f.startswith(dataset):
-            epochs.append((float(m.group(2)), int(m.group(1)), f))
-    best = min(epochs)
-    shutil.copyfile(os.path.join(ckpt_savedir, best[2]), os.path.join(ckpt_savedir, 'md_eam.hdf5'))
+    # The notebook predicts with the in-memory model after fit_generator: the last epoch.
+    checkpoint = os.path.join(ckpt_savedir, 'md_eam.hdf5')
+    state['model'].save_weights(checkpoint)
+    epochs = sorted(f for f in os.listdir(ckpt_savedir) if f.startswith(state['dataset']) and '_ep' in f)
     with open(os.path.join(ckpt_savedir, 'md_eam.json'), 'w') as f:
-        json.dump(dict(selected=best[2], epoch=best[1], val_loss=best[0], seed=args.seed, epochs=args.epochs,
-                       micro_batch=args.micro_batch,
-                       all=sorted([e[2] for e in epochs])), f, indent=2)
-    print('Selected epoch %d (val_loss %.4f) -> %s' % (best[1], best[0], os.path.join(ckpt_savedir, 'md_eam.hdf5')))
+        json.dump(dict(selected='last epoch', epoch=args.epochs, seed=args.seed, epochs=args.epochs,
+                       micro_batch=args.micro_batch, all=epochs), f, indent=2)
+    print('Saved the last epoch (%d) -> %s' % (args.epochs, checkpoint))
 
 
 if __name__ == '__main__':
