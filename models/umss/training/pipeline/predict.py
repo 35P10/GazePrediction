@@ -2,15 +2,14 @@
 
 evaluate: reports the paper's Table 2 metrics (NSS, CC, KL, SIM) at 3 and 5 seconds
           against accumulated human fixations, for both our checkpoint and the
-          released maps. Uses the shared verified official functions.
+          released maps. Uses the shared official functions.
 export:   writes `<stem>.npz` files in the format `models.umss.UMSS(maps_dir=...)` reads,
           so sampling can run on any machine without TensorFlow.
 
-Inference mirrors models/umss/model.py: md_sem with one output, upstream pre/post-processing.
+Inference uses the official md_sem network and pre/post-processing, as models/umss/model.py does.
 """
 import argparse
 import csv
-import hashlib
 import json
 import os
 import sys
@@ -20,9 +19,11 @@ import numpy as np
 
 if __package__:
     from models.umss.evaluation import saliency as S
-else:
+    from models.umss.reference.setup_umss import load_md_eam, sha256
+else:  # Standalone training Docker image.
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     from evaluation import saliency as S
+    from reference.setup_umss import load_md_eam, sha256
 
 TIMES = [500, 3000, 5000]
 GRID = (480, 640)
@@ -30,16 +31,11 @@ SALIENCY_METRICS = ('NSS', 'CC', 'KL', 'SIM')
 
 
 def load_model(work, checkpoint):
-    code = os.path.join(work, 'upstream', 'Code', 'scripts')
-    sys.path[:0] = [os.path.join(code, 'src'), os.path.join(code, 'saliency')]
-    from multiduration_models import md_sem
-    from sal_imp_utilities import preprocess_images, postprocess_predictions
-    model = md_sem(input_shape=(240, 320, 3), nb_timestep=3, n_outs=1, verbose=False, print_shapes=False)
-    model.load_weights(checkpoint)
-    return model, preprocess_images, postprocess_predictions
+    return load_md_eam(Path(work) / 'upstream', checkpoint)
 
 
 def predict(model, preprocess, postprocess, path, height, width):
+    """Official pre/post-processing around the network: three maps at the image resolution."""
     predictions = model.predict(preprocess([str(path)], 240, 320))
     if isinstance(predictions, list):
         predictions = predictions[0]
@@ -96,8 +92,8 @@ def evaluate(args):
         for time in (3000, 5000)}
     metadata = dict(protocol='umss-table2-accumulated-human-3s-5s-v1',
                     images=len(images), sigma_px=S.SIGMA, prediction_format='8-bit grayscale PNG',
-                    checkpoint_sha256=hashlib.sha256(Path(args.checkpoint).read_bytes()).hexdigest(),
-                    source_manifest_sha256=hashlib.sha256((repository / 'sources.json').read_bytes()).hexdigest(),
+                    checkpoint_sha256=sha256(args.checkpoint),
+                    source_manifest_sha256=sha256(repository / 'sources.json'),
                     means=summary)
     (work / 'predictions/paper_saliency_summary.json').write_text(json.dumps(metadata, indent=2) + '\n')
     print('Paper Table 2 protocol: accumulated human references, sigma=19 px')
@@ -111,28 +107,38 @@ def evaluate(args):
 
 def export(args):
     import cv2
+    import platform
+    import keras
+    import tensorflow as tf
     from PIL import Image
     model, pre, post = load_model(args.work, args.checkpoint)
     out = Path(args.out or os.path.join(args.work, 'predictions', 'npz'))
     out.mkdir(parents=True, exist_ok=True)
     images = sorted(p for p in Path(args.images).iterdir() if p.suffix.lower() in ('.png', '.jpg', '.jpeg'))
+    if not images:
+        raise FileNotFoundError('No images to export: ' + str(args.images))
+    checkpoint_hash = sha256(args.checkpoint)
+    source_hash = sha256(Path(args.work) / 'upstream/sources.json')
+    image_hashes, npz_hashes = {}, {}
     for image in images:
+        image_hashes[image.stem] = sha256(image)
         with Image.open(image) as im:
             width, height = im.size
         maps = predict(model, pre, post, image, height, width)
-        volume = np.stack([cv2.resize(m, (GRID[1], GRID[0])) for m in maps]).astype(np.float32)
-        np.savez_compressed(out / (image.stem + '.npz'), maps=volume, width=width, height=height,
-                            image_sha256=hashlib.sha256(image.read_bytes()).hexdigest())
-    import keras
-    import tensorflow as tf
-    import platform
-    metadata = dict(checkpoint_sha256=hashlib.sha256(Path(args.checkpoint).read_bytes()).hexdigest(),
-                    source_manifest_sha256=hashlib.sha256((Path(args.work)/'upstream/sources.json').read_bytes()).hexdigest(),
+        volume = np.stack([cv2.resize(m, GRID[::-1]) for m in maps]).astype(np.float32)
+        npz = out / (image.stem + '.npz')
+        np.savez_compressed(npz, maps=volume, width=width, height=height, image_sha256=image_hashes[image.stem],
+                            checkpoint_sha256=checkpoint_hash, source_manifest_sha256=source_hash)
+        npz_hashes[image.stem] = sha256(npz)
+    metadata = dict(export_schema='umss-certified-maps-v1', checkpoint_sha256=checkpoint_hash,
+                    source_manifest_sha256=source_hash, npz_sha256=npz_hashes, image_sha256=image_hashes,
                     tensorflow=tf.__version__, keras=keras.__version__, numpy=np.__version__,
                     python=platform.python_version(), platform=platform.platform(),
-                    image_sha256={image.stem:hashlib.sha256(image.read_bytes()).hexdigest() for image in images},
-                    grid=list(GRID), input_shape=[240,320,3], preprocessing='upstream preprocess_images; postprocess_predictions; cv2 grid resize')
-    (out/'export_metadata.json').write_text(__import__('json').dumps(metadata,indent=2)+'\n')
+                    grid=list(GRID), input_shape=[240, 320, 3],
+                    preprocessing='upstream preprocess_images; postprocess_predictions; cv2 grid resize')
+    temporary = out / 'export_metadata.json.part'
+    temporary.write_text(json.dumps(metadata, indent=2) + '\n')
+    temporary.replace(out / 'export_metadata.json')
     print('Exported %d map volumes to %s' % (len(images), out))
 
 

@@ -1,6 +1,6 @@
 """UMSS stage 1: fine-tune MD-SEM (CodeCharts weights) on MASSVIS-EFD 500/3000/5000 ms.
 
-Executes the verified training cells of `UMSS-S1.ipynb` (DaRUS V2) through
+Executes the original training cells of `UMSS-S1.ipynb` (DaRUS V2) through
 models/umss/training/s1.py. Model settings, generators, losses, optimizer, callbacks
 and fitting calls come from the original notebook. Runtime adaptations:
   * 6 epochs, as stated in the paper (Sec. 5.2); the public notebook says 9 (`--epochs 9`);
@@ -21,9 +21,6 @@ import shutil
 import sys
 from pathlib import Path
 
-WORK = '/work'
-
-
 def main(args):
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     code = os.path.join(args.work, 'upstream', 'Code', 'scripts')
@@ -32,19 +29,15 @@ def main(args):
     os.environ.setdefault('CUDA_VISIBLE_DEVICES', '0')
 
     repository = Path(args.work) / 'upstream'
-    verify_manifest = json.loads((repository / 'sources.json').read_text())
-    # Verify modules before importing the original neural code.
-    from reference.setup_umss import verify_sources
-    verify_sources(repository, verify_manifest)
 
     import numpy as np
     import tensorflow as tf
     import keras
     from keras.callbacks import ModelCheckpoint, LearningRateScheduler, CSVLogger
     from keras.optimizers import Adam
-    from data_loading import load_datasets_multiduration
-    from util import get_model_by_name, create_losses
-    from sal_imp_utilities import MultidurationGenerator
+    from data_loading import load_datasets_multiduration  # official
+    from util import get_model_by_name, create_losses  # official
+    from sal_imp_utilities import MultidurationGenerator  # official
     from training.s1 import run_s1, s1_defaults
 
     recipe = s1_defaults(repository)
@@ -95,7 +88,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--work', default=WORK)
+    parser.add_argument('--work', default='/work')
     parser.add_argument('--epochs', type=int, default=6, help='6 in the paper (Sec. 5.2), 9 in UMSS-S1.ipynb')
     parser.add_argument('--seed', type=int, default=0, help='use -1 for no seeding, as in the notebook')
     parser.add_argument('--micro-batch', type=int, default=8, choices=[2, 4, 8],

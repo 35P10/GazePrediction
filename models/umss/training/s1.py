@@ -1,4 +1,4 @@
-"""Our adapter for executing verified original UMSS-S1 training cells.
+"""Our adapter for executing the original UMSS-S1 training cells.
 
 Local paths, logging, seeds and optional micro-batches are supplied by the CLI.
 The authors' source files remain unchanged.
@@ -9,19 +9,12 @@ import math
 import os
 from pathlib import Path
 
-if __package__ == 'training':  # Standalone training Docker image.
-    from reference.setup_umss import verify_source_file
-else:
-    from ..reference.setup_umss import verify_source_file
-
-
 S1_NOTEBOOK = 'Code/scripts/UMSS/UMSS-S1.ipynb'
 
 
 def _s1_cells(repository):
-    """Read pinned training cells, excluding IPython, GPU probes and prediction cells."""
+    """Read the official training cells, excluding IPython, GPU probes and prediction cells."""
     path = Path(repository) / S1_NOTEBOOK
-    verify_source_file(path, S1_NOTEBOOK)
     cells = json.loads(path.read_text())['cells']
     return path, {index: ast.parse(''.join(cells[index]['source']))
                   for index in (6, 7, 9, 10, 11, 14)}

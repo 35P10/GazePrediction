@@ -4,7 +4,7 @@ Targets per branch, as in the paper (Sec. 5.2): the 0-0.5 s branch keeps an ordi
 saliency map (Gaussian-blurred fixations) to learn the first-fixation centre bias; the
 0.5-3 s and 3-5 s branches use element fixation density (EFD) maps.
 
-``training/data_preparation.py`` loads EFD definitions from the verified
+``training/data_preparation.py`` loads EFD definitions from the original
 ``generate_Massvis-EFD.ipynb``. Shared ``evaluation/saliency.py`` provides the
 original fixation-map and heatmap function. Only directory orchestration, time bucketing and
 compatibility adaptations remain here.
@@ -38,12 +38,9 @@ CHECK_TIMES = [500, 2000, 5000, 10000]
 SPLITS = ['train', 'val']
 
 
-def make_efdmap(w, h, coords, imname, annots, repository=None):
-    return D.make_efdmap(repository or S.DEFAULT_DESTINATION, w, h, coords, imname, annots)
-
-
 def bucket_coords(csv_files, times, t):
-    """Same loop as the notebook: a fixation belongs to the bucket where its cumulative end time falls."""
+    """Official: same loop as generate_Massvis-EFD.ipynb; a fixation belongs to the bucket where its
+    cumulative end time falls. Returns the bucket's coordinates and the accumulated ones."""
     allcoords, allcoords_accum = [], []
     mintime = 0 if t == 0 else times[t - 1]
     for subcsv in csv_files:
@@ -58,14 +55,9 @@ def bucket_coords(csv_files, times, t):
     return allcoords, allcoords_accum
 
 
-SIGMA = S.SIGMA
-
-
-def make_fixmap_and_heatmap(w, h, coords, sigma=50, repository=None):
-    return S.make_fixmap_and_heatmap(repository or S.DEFAULT_DESTINATION, w, h, coords, sigma)
-
-
 def build(efd_root, fixations, annots, savedir, times, with_fixmaps=True, repository=None):
+    """``with_fixmaps=False`` (--check) writes only the released EFD layout."""
+    repository = repository or S.DEFAULT_DESTINATION
     for split in SPLITS:
         raw_src = os.path.join(efd_root, split, 'raw_img')
         names = sorted(os.path.splitext(f)[0] for f in os.listdir(raw_src) if f.endswith('.png'))
@@ -84,25 +76,24 @@ def build(efd_root, fixations, annots, savedir, times, with_fixmaps=True, reposi
             csv_files = glob(os.path.join(fixations, imname, 'enc', '*.csv'))
             if not csv_files:
                 raise FileNotFoundError('No MASSVIS encoding fixations for ' + imname)
+
+            def save(image, kind, time):
+                image.save(os.path.join(out, kind, str(time), imname + '.png'))
+
             for t, time in enumerate(times):
                 coords, coords_accum = bucket_coords(csv_files, times, t)
-                efd = make_efdmap(w, h, coords, imname, annots, repository)
-                if not with_fixmaps:  # --check: released EFD layout only
-                    efd.save(os.path.join(out, 'heatmaps', str(time), imname + '.png'))
-                    make_efdmap(w, h, coords_accum, imname, annots, repository).save(
-                        os.path.join(out, 'heatmaps_accum', str(time), imname + '.png'))
-                    continue
-                fix, sal = make_fixmap_and_heatmap(w, h, coords, sigma=SIGMA, repository=repository)
-                fix_accum, _ = make_fixmap_and_heatmap(w, h, coords_accum, sigma=SIGMA, repository=repository)
-                fix.save(os.path.join(out, 'fix_maps', str(time), imname + '.png'))
-                fix_accum.save(os.path.join(out, 'fix_maps_accum', str(time), imname + '.png'))
-                if t == 0:
-                    sal.save(os.path.join(out, 'heatmaps', str(time), imname + '.png'))
-                    sal.save(os.path.join(out, 'heatmaps_accum', str(time), imname + '.png'))
+                if with_fixmaps:
+                    fix, sal = S.make_fixmap_and_heatmap(repository, w, h, coords)
+                    fix_accum, _ = S.make_fixmap_and_heatmap(repository, w, h, coords_accum)
+                    save(fix, 'fix_maps', time)
+                    save(fix_accum, 'fix_maps_accum', time)
+                if with_fixmaps and t == 0:
+                    # The 0-0.5 s branch learns the first-fixation centre bias from an ordinary saliency map.
+                    save(sal, 'heatmaps', time)
+                    save(sal, 'heatmaps_accum', time)
                 else:
-                    efd.save(os.path.join(out, 'heatmaps', str(time), imname + '.png'))
-                    make_efdmap(w, h, coords_accum, imname, annots, repository).save(
-                        os.path.join(out, 'heatmaps_accum', str(time), imname + '.png'))
+                    save(D.make_efdmap(repository, w, h, coords, imname, annots), 'heatmaps', time)
+                    save(D.make_efdmap(repository, w, h, coords_accum, imname, annots), 'heatmaps_accum', time)
         # load_datasets_multiduration lists `<dataset>/test`; the S1 notebook never uses it.
         os.makedirs(os.path.join(savedir, 'test'), exist_ok=True)
 

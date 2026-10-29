@@ -1,6 +1,6 @@
 """Shared saliency metrics and human references for training evaluation and reproduction.
 
-Original function definitions are verified and loaded without running their
+Original function definitions are loaded without running their
 standalone drivers or importing their unused Keras dependencies.
 """
 from functools import lru_cache
@@ -18,26 +18,24 @@ SIGMA = 19
 
 @lru_cache(maxsize=None)
 def saliency_functions(repository):
+    # Official calculate_metrics and the metric functions it calls, from the authors' eval.py.
+    # Its eval_saliconeval import is missing from the deposit; the one saliconeval value it computes
+    # for these inputs, 'CC (saliconeval)', is not used here.
     return load_definitions(repository, 'Code/scripts/saliency/eval.py',
-                        ('cc_npy', 'nss_npy', 'kl_npy', 'sim_npy'), {'np': np})
+                            ('calculate_metrics', 'r2', 'rmse', 'cc_npy', 'nss_npy', 'kl_npy', 'sim_npy'),
+                            {'np': np, 'cc_saliconeval': lambda gt, p: float('nan')})
 
 
 def score_saliency(repository, prediction, heatmap, fixations):
-    """Table 2 normalization and the original four NumPy metric functions."""
-    functions = saliency_functions(str(repository))
-    prediction = (prediction - prediction.min()) / (prediction.max() - prediction.min())
-    if heatmap.max() > 1:
-        heatmap = heatmap.astype(np.float32) / 255.
-    return {
-        'NSS': float(functions['nss_npy'](fixations, prediction)),
-        'CC': float(functions['cc_npy'](heatmap, prediction)),
-        'KL': float(functions['kl_npy'](heatmap, prediction)),
-        'SIM': float(functions['sim_npy'](heatmap, prediction)),
-    }
+    """Table 2 metrics through the official calculate_metrics (its own min-max normalization)."""
+    metrics = saliency_functions(str(repository))['calculate_metrics'](
+        prediction, gt_map=heatmap, gt_fix_map=fixations, sAUC=False)
+    return {name: float(metrics[name][0]) for name in ('NSS', 'CC', 'KL', 'SIM')}
 
 
 @lru_cache(maxsize=None)
 def _fixmap_function(repository):
+    # Official make_fixmap_and_heatmap from the authors' saliency_saltinet_csv.py.
     from scipy import ndimage
     namespace = load_definitions(repository, 'Code/scripts/metrics/saliency_saltinet_csv.py',
                              ('make_fixmap_and_heatmap',),

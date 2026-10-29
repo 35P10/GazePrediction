@@ -1,7 +1,7 @@
 # UMSS stage 1 training (MD-EAM)
 
 Fine-tune MD-SEM on MASSVIS to produce the three temporal saliency maps used by
-UMSS. The pipeline executes the verified training cells of `UMSS-S1.ipynb` and
+UMSS. The pipeline executes the original training cells of `UMSS-S1.ipynb` and
 saves a selected checkpoint as `md_eam.hdf5`. Stage 2 samples scanpaths and does
 not require a separate training run.
 
@@ -33,12 +33,13 @@ All paths below are relative to `UMSS_WORK`.
 
 | Stage | Purpose | Output |
 |---|---|---|
-| `download` | Fetch and verify sources, MASSVIS inputs and initial weights. | `upstream/`, `downloads/` |
+| `download` | Fetch sources, MASSVIS inputs and initial weights. | `upstream/`, `downloads/` |
+| `verify` | Optional, separate: check sources and downloads against their pinned checksums. | — |
 | `check` | Regenerate the released EFD maps and require pixel-for-pixel agreement. | `datasets/check_500_2000_5000_10000/` |
 | `prepare` | Build the temporal training targets and fixation maps. | `datasets/massvis_bucket_500_3000_5000/` |
 | `train` | Fine-tune the model and select the lowest-validation-loss checkpoint. | `ckpt/` |
 
-Verified downloads are reused. Run `check` before training to validate the data
+Downloads already present are reused; run `./run.sh verify` to check them. Run `check` before training to validate the data
 preparation. To check the training setup with one epoch after preparation:
 
 ```bash

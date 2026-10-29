@@ -1,4 +1,4 @@
-"""Training-only EFD generation using the verified original notebook functions."""
+"""Training-only EFD generation using the original notebook functions."""
 from functools import lru_cache
 import io
 import os
@@ -34,6 +34,7 @@ def _efd_functions(repository, annotations):
     # The original parser uses pandas only for these two operations. Its source
     # stays unchanged; the adapter repairs vis386's unused description field.
     pandas_adapter = SimpleNamespace(DataFrame=pd.DataFrame, read_csv=_annotation_csv)
+    # Official EFD definitions from the authors' notebook.
     return load_definitions(
         repository, 'Code/scripts/UMSS/generate_Massvis-EFD.ipynb',
         ('parse_element_label', 'combine_rows', 'polygon_area', 'BBox', 'make_efdmap'),
