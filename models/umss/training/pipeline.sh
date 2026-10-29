@@ -10,13 +10,14 @@ shift || true
 download() { python download.py --work "$WORK"; }
 verify()   { python ../../reference/verify.py --work "$WORK"; }
 check()    { python prepare_data.py --work "$WORK" --check; }
-prepare()  { python prepare_data.py --work "$WORK"; }
+prepare()  { python prepare_data.py --work "$WORK" "$@"; }
 train()    { python train.py --work "$WORK" "$@"; }
 evaluate() { python predict.py --work "$WORK" "$@" evaluate; }
 export_()  { python predict.py --work "$WORK" export "$@"; }
 
 case "$stage" in
-  download|verify|check|prepare) "$stage" ;;
+  download|verify|check) "$stage" ;;
+  prepare) prepare "$@" ;;
   train)  train "$@" ;;
   evaluate) evaluate "$@" ;;
   export) export_ "$@" ;;

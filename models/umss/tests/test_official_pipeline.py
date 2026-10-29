@@ -63,6 +63,15 @@ class OfficialPipelineTests(unittest.TestCase):
             state['gen_train'], epochs=6, verbose=2, callbacks=['checkpoint', 'scheduler', 'csv-log'],
             validation_data=state['gen_val'], max_queue_size=10, workers=5)
         np.testing.assert_allclose(learning_rates, [1e-4, 1e-4, 1e-5, 1e-5, 1e-5, 1e-6])
+        bindings['load_datasets_multiduration'].assert_called_with(
+            'massvis_bucket_500_3000_5000', [500, 3000, 5000], bp=temporary.name)
+
+        # --times: the notebook's literal `times` must not overwrite the supplied ones.
+        bindings.update(times=[500, 2000, 5000], dataset='massvis_bucket_500_2000_5000')
+        with contextlib.redirect_stdout(io.StringIO()):
+            S1.run_s1(REFERENCE, bindings)
+        bindings['load_datasets_multiduration'].assert_called_with(
+            'massvis_bucket_500_2000_5000', [500, 2000, 5000], bp=temporary.name)
 
     def test_export_writes_maps_that_umss_reads_and_reuses_them(self):
         from models.umss import UMSS, export_maps

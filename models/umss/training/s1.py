@@ -57,7 +57,9 @@ def run_s1(repository, bindings, wrap_training_generator=None):
                and isinstance(node.targets[0], ast.Name)
                and (node.targets[0].id == 'n_timesteps'
                     or (node.targets[0].id == 'opt' and 'opt' not in state))]
-    execute(7)
+    # Cell 7 assigns `times` literally; a run that supplies its own times (--times) keeps them.
+    execute(7, [node for node in cells[7].body if not (
+        isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Name) and node.targets[0].id in bindings)])
     execute(9, derived)
     for index in (10, 11):
         execute(index)

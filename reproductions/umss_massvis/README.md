@@ -22,43 +22,42 @@ maps predate that, so S1 resizes their grid maps instead.
 
 ## Results
 
-Old weights; the new weights' S1 is in
-[artifacts/checkpoints/umss](../../artifacts/checkpoints/umss/README.md) and their S2 is still to run.
+"Old" and "New" are the two retrained weights (`WEIGHTS = 'old'` / `'last_epoch'`).
 
 S1, Table 2 (higher is better except KL):
 
-| Duration | Metric | Paper | Released maps | Ours |
-|---|---|---:|---:|---:|
-| 3 s | NSS | 1.406 | 1.406 | 1.577 |
-| 3 s | CC | 0.586 | 0.586 | 0.663 |
-| 3 s | KL | 0.754 | 0.754 | 0.677 |
-| 3 s | SIM | 0.516 | 0.516 | 0.543 |
-| 5 s | NSS | 1.024 | 1.024 | 1.071 |
-| 5 s | CC | 0.514 | 0.514 | 0.540 |
-| 5 s | KL | 0.689 | 0.689 | 0.687 |
-| 5 s | SIM | 0.530 | 0.530 | 0.533 |
+| Duration | Metric | Paper | Released maps | Ours, old | Ours, new |
+|---|---|---:|---:|---:|---:|
+| 3 s | NSS | 1.406 | 1.406 | 1.577 | 1.579 |
+| 3 s | CC | 0.586 | 0.586 | 0.663 | 0.664 |
+| 3 s | KL | 0.754 | 0.754 | 0.677 | 0.684 |
+| 3 s | SIM | 0.516 | 0.516 | 0.543 | 0.538 |
+| 5 s | NSS | 1.024 | 1.024 | 1.071 | 1.071 |
+| 5 s | CC | 0.514 | 0.514 | 0.540 | 0.540 |
+| 5 s | KL | 0.689 | 0.689 | 0.687 | 0.690 |
+| 5 s | SIM | 0.530 | 0.530 | 0.533 | 0.527 |
 
 S2, Table 1 without ScanMatch (40 scanpaths per chart, seed 0):
 
-| Metric | Paper | Released scanpaths | Ours |
-|---|---:|---:|---:|
-| Sequence Score, mean | 0.446 | 0.364 | 0.382 |
-| Sequence Score, best | 0.724 | 0.654 | 0.699 |
-| sTDE, mean | 0.906 | 0.905 | 0.913 |
-| sTDE, best | 0.925 | 0.922 | 0.943 |
-| DTW, mean (lower is better) | 6529.1 | 6531.5 | 6590.3 |
-| DTW, best (lower is better) | 4683.4 | 4369.4 | 3775.1 |
-| MultiMatch shape | 0.943 | 0.943 | 0.958 |
-| MultiMatch direction | 0.728 | 0.730 | 0.767 |
-| MultiMatch length | 0.935 | 0.936 | 0.950 |
-| MultiMatch position | 0.771 | 0.772 | 0.774 |
-| MultiMatch duration | 0.712 | 0.711 | 0.710 |
+| Metric | Paper | Released scanpaths | Ours, old | Ours, new |
+|---|---:|---:|---:|---:|
+| Sequence Score, mean | 0.446 | 0.364 | 0.382 | 0.381 |
+| Sequence Score, best | 0.724 | 0.654 | 0.699 | 0.704 |
+| sTDE, mean | 0.906 | 0.905 | 0.913 | 0.913 |
+| sTDE, best | 0.925 | 0.922 | 0.943 | 0.943 |
+| DTW, mean (lower is better) | 6529.1 | 6531.5 | 6590.3 | 6583.5 |
+| DTW, best (lower is better) | 4683.4 | 4369.4 | 3775.1 | 3771.1 |
+| MultiMatch shape | 0.943 | 0.943 | 0.958 | 0.959 |
+| MultiMatch direction | 0.728 | 0.730 | 0.767 | 0.761 |
+| MultiMatch length | 0.935 | 0.936 | 0.950 | 0.951 |
+| MultiMatch position | 0.771 | 0.772 | 0.774 | 0.775 |
+| MultiMatch duration | 0.712 | 0.711 | 0.710 | 0.711 |
 
 The released maps give Table 2 exactly. The released scanpaths give Table 1 for sTDE, DTW mean and
 MultiMatch, but not for Sequence Score and DTW best: these depend on the human references the deposit
-does not include and that are rebuilt here.
+does not include and that are rebuilt here. The two weights give the same results within run-to-run noise.
 
-Tables: [results/s1_old.csv](results/s1_old.csv), [results/s2_old.csv](results/s2_old.csv).
+Tables: `results/s1_<weights>.csv`, `results/s2_<weights>.csv`.
 
 ## What to keep in mind
 
@@ -68,7 +67,8 @@ Tables: [results/s1_old.csv](results/s1_old.csv), [results/s2_old.csv](results/s
 - The old checkpoint's epoch was chosen on these same 66 charts. A second retraining that keeps the last epoch
   (`md_eam_last_epoch.hdf5`) gives the same S1 scores within 0.01, so ours being above the paper at 3 s does
   not come from that choice: the published recipe does not give the paper's numbers
-  ([details](../../artifacts/checkpoints/umss/README.md)). S2 has not been run with the new weights yet.
+  ([details](../../artifacts/checkpoints/umss/README.md)). The released maps also sit about 10 px right of ours, and other seeds or 9 epochs move
+  the scores by about 0.01.
 - S2 is random: another seed gives slightly different numbers.
 
 ## Files

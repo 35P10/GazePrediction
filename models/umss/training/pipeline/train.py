@@ -9,6 +9,7 @@ and fitting calls come from the original notebook. Runtime adaptations:
   * optional seeds (the notebook sets none);
   * after training, the weights of the last epoch are saved as md_eam.hdf5: the notebook predicts
     with the model left in memory by fit_generator (all epochs are also saved, as upstream does);
+  * `--times 500 2000 5000` trains on other interval ends (the notebook has this dataset commented out);
   * `--micro-batch m` (< 8) for GPUs without room for 8 images: the same batch-8 Adam updates
     built from 8/m accumulated micro-batches (see accumulation.py; BatchNorm statistics differ).
 """
@@ -59,6 +60,8 @@ def main(args):
         load_datasets_multiduration=load_datasets_multiduration,
         get_model_by_name=get_model_by_name, create_losses=create_losses,
         MultidurationGenerator=MultidurationGenerator)
+    if args.times:
+        bindings.update(times=args.times, dataset='massvis_bucket_' + '_'.join(map(str, args.times)))
     wrap_generator = None
     if args.micro_batch < recipe['batch_size']:
         bindings['opt'] = adam_accumulate_class()(
@@ -73,7 +76,7 @@ def main(args):
     epochs = sorted(f for f in os.listdir(ckpt_savedir) if f.startswith(state['dataset']) and '_ep' in f)
     with open(os.path.join(ckpt_savedir, 'md_eam.json'), 'w') as f:
         json.dump(dict(selected='last epoch', epoch=args.epochs, seed=args.seed, epochs=args.epochs,
-                       micro_batch=args.micro_batch, all=epochs), f, indent=2)
+                       micro_batch=args.micro_batch, times=state['times'], all=epochs), f, indent=2)
     print('Saved the last epoch (%d) -> %s' % (args.epochs, checkpoint))
 
 
@@ -84,6 +87,8 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=0, help='use -1 for no seeding, as in the notebook')
     parser.add_argument('--micro-batch', type=int, default=8, choices=[2, 4, 8],
                         help='images per forward pass; below 8, gradients are accumulated to batch 8')
+    parser.add_argument('--times', type=int, nargs=3, default=None, metavar='MS',
+                        help="interval ends in ms; default the notebook's 500 3000 5000 (prepare them first)")
     parser.add_argument('--verbose', type=int, default=2)
     args = parser.parse_args()
     if args.seed < 0:

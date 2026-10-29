@@ -121,6 +121,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--work', default='/work')
     parser.add_argument('--check', action='store_true', help='verify the official functions against the released maps')
+    parser.add_argument('--times', type=int, nargs=3, default=TIMES, metavar='MS',
+                        help='interval ends in ms (default 500 3000 5000, as in the S1 notebook)')
     args = parser.parse_args()
     repository = os.path.join(args.work, 'upstream')
     downloads = os.path.join(args.work, 'downloads')
@@ -132,6 +134,6 @@ if __name__ == '__main__':
         build(efd_root, fixations, annots, regenerated, CHECK_TIMES, with_fixmaps=False, repository=repository)
         check(efd_root, regenerated)
     else:
-        savedir = os.path.join(args.work, 'datasets', 'massvis_bucket_500_3000_5000')
-        build(efd_root, fixations, annots, savedir, TIMES, repository=repository)
+        savedir = os.path.join(args.work, 'datasets', 'massvis_bucket_' + '_'.join(map(str, args.times)))
+        build(efd_root, fixations, annots, savedir, args.times, repository=repository)
         print('Dataset ready:', savedir)

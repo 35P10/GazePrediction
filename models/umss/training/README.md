@@ -116,3 +116,17 @@ seed-0 run. Every epoch of every run is evaluated, and a table of all of them is
 are kept in `sweep/<run>/` and skipped when rerun. It uses micro-batch 4 (`MICRO_BATCH=8 ./sweep.sh` if
 batch 8 fits). Picking the run closest to the paper is a choice made on the evaluation charts; report it
 as such.
+
+## Other interval ends
+
+The notebook trains on 0–0.5, 0.5–3 and 3–5 s, but has a 500/2000/5000 dataset commented out, and the authors'
+S2 notebook reads maps from `MDSEM_bucket_500_2000_5000`. To train on those intervals:
+
+```bash
+./run.sh prepare --times 500 2000 5000
+./run.sh train --micro-batch 4 --times 500 2000 5000
+```
+
+`evaluate` is unchanged: the middle map is still scored against fixations up to 3 s, as for the paper's
+Table 2 (the authors' `predict_and_save_md` names it `_3000` whatever the training intervals).
+
