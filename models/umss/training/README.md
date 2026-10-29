@@ -104,3 +104,15 @@ authors' notebook predicts with the model left after the last epoch, so `md_eam.
 Record each kept checkpoint and its settings in
 [artifacts/checkpoints/umss](../../../artifacts/checkpoints/umss/README.md).
 It is not chosen on the validation images, which are also the Table 2 evaluation images.
+
+## Evaluating a checkpoint and the seed/epoch sweep
+
+`./run.sh evaluate` scores `ckpt/md_eam.hdf5` against Table 2; `--checkpoint /work/<file>` scores another one
+(a path inside the container, where `UMSS_WORK` is `/work`).
+
+`./sweep.sh` (on the host, after `prepare`) measures how much the scores move with the choices the authors
+left open: seeds 1, 2 and 3 with 6 epochs, and the notebook's 9 epochs. An existing `ckpt/` becomes the
+seed-0 run. Every epoch of every run is evaluated, and a table of all of them is printed at the end. Runs
+are kept in `sweep/<run>/` and skipped when rerun. It uses micro-batch 4 (`MICRO_BATCH=8 ./sweep.sh` if
+batch 8 fits). Picking the run closest to the paper is a choice made on the evaluation charts; report it
+as such.

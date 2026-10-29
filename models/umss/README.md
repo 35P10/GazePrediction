@@ -49,7 +49,7 @@ python models/umss/reference/verify.py --work DIR    # a training run: upstream/
 - The training reference preserves `Code/scripts/src/`, `Code/scripts/saliency/` and `Code/scripts/UMSS/` from the original repository. Training and inference import modules from those paths.
 - Official evaluation sources live in [official_repository/Code](../../reproductions/umss_massvis/official_repository/Code/); our adapter and evaluation helpers remain outside that folder.
 - `artifacts/checkpoints/umss/`: retrained checkpoints via Git LFS (`git lfs pull` after cloning): `md_eam.hdf5`
-  (old, in use) and `md_eam_last_epoch.hdf5` (new). Their settings and results are in
+  (old, default) and `md_eam_last_epoch.hdf5` (new, last epoch). Their settings and results are in
   [its README](../../artifacts/checkpoints/umss/README.md).
 - `training/`: existing Linux/NVIDIA Docker pipeline. See [setup](training/README.md).
 - Working files and run outputs: `artifacts/runs/umss/massvis_md_eam_validation/` by default; override with `UMSS_WORK`.
