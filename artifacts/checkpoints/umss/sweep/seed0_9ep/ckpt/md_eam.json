@@ -1,0 +1,18 @@
+{
+  "selected": "last epoch",
+  "epoch": 9,
+  "seed": 0,
+  "epochs": 9,
+  "micro_batch": 4,
+  "all": [
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep01_valloss3.8720.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep02_valloss2.5238.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep03_valloss1.1742.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep04_valloss0.9591.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep05_valloss0.7808.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep06_valloss0.7865.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep07_valloss0.7752.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep08_valloss0.7466.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep09_valloss0.7628.hdf5"
+  ]
+}

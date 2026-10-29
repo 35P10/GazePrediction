@@ -1,0 +1,15 @@
+{
+  "selected": "last epoch",
+  "epoch": 6,
+  "seed": 0,
+  "epochs": 6,
+  "micro_batch": 4,
+  "all": [
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep01_valloss3.8409.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep02_valloss2.6149.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep03_valloss1.1629.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep04_valloss0.9275.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep05_valloss0.7726.hdf5",
+    "massvis_bucket_500_3000_5000_kl10cc-5nss-1ccmatch3_ep06_valloss0.7766.hdf5"
+  ]
+}
