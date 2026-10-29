@@ -1,0 +1,13 @@
+{
+  "project": "https://chart-reading.github.io/",
+  "repository": "https://osf.io/bas39/",
+  "metadata_url": "https://api.osf.io/v2/nodes/bas39/files/osfstorage/?page%5Bsize%5D=100",
+  "file_url": "https://osf.io/download/n2gq3/",
+  "file_id": "682c5554a7323d94bdb06f53",
+  "version": 1,
+  "name": "chartist.zip",
+  "bytes": 54430177,
+  "sha256": "bb2afb361f6b0c973bd33865cf52c1c67d9454606eeff8ce5553e91d398b7a2c",
+  "date_created": "2025-05-20T10:11:32.632425Z",
+  "retrieved_date": "2026-10-15"
+}

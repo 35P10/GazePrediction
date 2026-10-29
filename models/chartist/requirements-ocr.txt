@@ -1,0 +1,17 @@
+# Environment for models/chartist/ocr.py (Python 3.10). Tested on macOS Apple Silicon:
+# reproduces the released meta.json text_positions for all 40 conditions.
+# paddleocr 2.x keeps the ocr.ocr() API used by data_gen.py (3.x changed it);
+# paddlepaddle 2.6.2 crashes on this platform and 3.0.0 fails with "No allocator found".
+paddlepaddle==3.2.0
+paddleocr==2.10.0
+numpy<2
+opencv-python==4.10.0.84
+opencv-contrib-python==4.10.0.84
+opencv-python-headless==4.10.0.84
+setuptools<70
+albumentations==1.4.10
+albucore==0.0.13
+torch==2.2.2
+transformers==4.46.3
+sentence-transformers==2.6.1
+scikit-learn
