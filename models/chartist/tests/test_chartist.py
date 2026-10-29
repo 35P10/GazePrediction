@@ -15,17 +15,19 @@ from models.chartist.model import CHARTIST_DIR
 
 
 class RecordedClient:
-    def __init__(self, fenced=False):
+    def __init__(self, fenced=False, fenced_answer=False):
         self.calls = []
         self.fenced = fenced
+        self.fenced_answer = fenced_answer
         self.chat = SimpleNamespace(completions=SimpleNamespace(create=self.create))
 
     def create(self, **kwargs):
         self.calls.append(copy.deepcopy(kwargs))
-        content = (dict(function='search_text', parameter='', reason='find a label')
-                   if kwargs['model'] == 'gpt-4o' else dict(answer='9.0', reason='observed value'))
+        answer = 'Please answer the question' in kwargs['messages'][-1]['content']
+        content = (dict(answer='9.0', reason='observed value') if answer
+                   else dict(function='search_text', parameter='', reason='find a label'))
         text = json.dumps(content)
-        if self.fenced and kwargs['model'] == 'gpt-4o':
+        if (self.fenced and not answer) or (self.fenced_answer and answer):
             text = '```json\n' + text + '\n```'
         return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=text))])
 
@@ -102,6 +104,62 @@ class ChartistTests(unittest.TestCase):
         self.assertEqual(len(log['memory']), 10)
         self.assertEqual((log['steps'], log['max_steps'], log['memory_limit']), (11, 10, 30))
         json.dumps(log)
+
+    def test_prompts_name_the_chart_type_from_meta(self):
+        client = RecordedClient()
+        predictor = self.predictor(client)
+        with patch.multiple(self.released, SearchEnv=FakeEnvironment, MapEnv=FakeEnvironment,
+                            ReadEnv=FakeEnvironment, TitleEnv=FakeEnvironment):
+            predictor.predict(dict(id=1, question='What value?', chart_type='a horizontal bar chart'),
+                              meta_json='unused', folder='unused')
+        systems = [call['messages'][0]['content'] for call in client.calls]
+        self.assertTrue(all('You are looking at a horizontal bar chart' in s for s in systems))
+        self.assertFalse(any('scatterplot' in s for s in systems))
+
+    def test_memory_summary_sends_the_summary_prompt(self):
+        client = RecordedClient()
+        predictor = self.predictor(client)
+        with patch.multiple(self.released, SearchEnv=FakeEnvironment, MapEnv=FakeEnvironment,
+                            ReadEnv=FakeEnvironment, TitleEnv=FakeEnvironment):
+            predictor.predict(dict(id=1, question='What value?'), meta_json='unused', folder='unused')
+        summaries = [call for call in predictor.last_log['llm_calls'] if call['requested_model'] == 'gpt-4o-mini'
+                     and call['decision'] <= predictor.network.max_steps]
+        self.assertEqual(len(summaries), 10)
+        for call in summaries:
+            self.assertIn('Please summarize the memory into one paragraph', call['request']['messages'][-1]['content'])
+            self.assertNotIn('Please decide your next action', call['request']['messages'][-1]['content'])
+
+    def test_fenced_final_answer_is_accepted_at_once(self):
+        client = RecordedClient(fenced_answer=True)
+        predictor = self.predictor(client)
+        with patch.multiple(self.released, SearchEnv=FakeEnvironment, MapEnv=FakeEnvironment,
+                            ReadEnv=FakeEnvironment, TitleEnv=FakeEnvironment):
+            result = predictor.predict(dict(id=1, question='What value?'), meta_json='unused', folder='unused')
+        self.assertEqual(result['answer']['answer'], '9.0')
+        final = [call for call in result['log']['llm_calls'] if call['decision'] == 11]
+        self.assertEqual(len(final), 1)
+        self.assertTrue(final[0]['response'].startswith('```'))
+        self.assertEqual(json.loads(final[0]['unfenced_response'])['answer'], '9.0')
+        self.assertEqual(len(result['points']), 10)
+
+    def test_every_call_goes_to_gpt_4o_by_default(self):
+        client = RecordedClient()
+        predictor = self.predictor(client)
+        with patch.multiple(self.released, SearchEnv=FakeEnvironment, MapEnv=FakeEnvironment,
+                            ReadEnv=FakeEnvironment, TitleEnv=FakeEnvironment):
+            result = predictor.predict(dict(id=1, question='What value?'), meta_json='unused', folder='unused')
+        self.assertEqual({call['model'] for call in client.calls}, {'gpt-4o'})
+        self.assertEqual({call['requested_model'] for call in result['log']['llm_calls']}, {'gpt-4o', 'gpt-4o-mini'})
+        self.assertEqual(result['log']['llm_model'], 'gpt-4o')
+
+    def test_llm_model_none_keeps_the_models_named_by_the_code(self):
+        client = RecordedClient()
+        with patch('stable_baselines3.PPO.load', return_value=FakePolicy()):
+            predictor = Chartist(client=client, llm_model=None)
+        with patch.multiple(self.released, SearchEnv=FakeEnvironment, MapEnv=FakeEnvironment,
+                            ReadEnv=FakeEnvironment, TitleEnv=FakeEnvironment):
+            predictor.predict(dict(id=1, question='What value?'), meta_json='unused', folder='unused')
+        self.assertEqual({call['model'] for call in client.calls}, {'gpt-4o', 'gpt-4o-mini'})
 
     def test_does_not_replace_the_official_json_reader(self):
         predictor = self.predictor(RecordedClient(fenced=True))

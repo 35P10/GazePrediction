@@ -67,7 +67,9 @@ class LLMPolicy:
     def setup(self, meta = None, meta_json = 'meta.json', folder = "images"):
         self.meta = meta
         self.task = meta["question"]
-        self.chart = "a scatterplot" # for example, a vertical bar chart, a line chart
+        # GazePrediction fix: the release always said "a scatterplot", a placeholder; data_gen.py
+        # writes the chart type to meta.json ("a horizontal bar chart"). The placeholder remains the fallback.
+        self.chart = meta.get("chart_type", "a scatterplot") # for example, a vertical bar chart, a line chart
         self.steps = 0
         self.gaze_history = []
         self.action_history = []
@@ -150,9 +152,12 @@ class LLMPolicy:
         #     model="no_effect", # the model variable must be set, but has no effect, model selection done with URL
         #     messages=message,
         # )
+        # GazePrediction fix: the release sent messages=self.message, the decision prompt,
+        # so the "summary" was another decision. The summary prompt built above is sent, as in the
+        # commented-out call; the model name of the active call is kept.
         completion = self.client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=self.message
+            messages=message
         )
         self.memory_in_text = completion.choices[0].message.content
         # print("now in memory: %s"%(self.memory_in_text))
