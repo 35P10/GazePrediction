@@ -23,5 +23,5 @@ case "$stage" in
   export) export_ "$@" ;;
   all)    download; check; prepare; train "$@"; evaluate ;;
   shell)  exec bash ;;
-  *) echo "usage: pipeline.sh [all|download|verify|check|prepare|train|evaluate [--checkpoint FILE]|export --images DIR|shell]" >&2; exit 2 ;;
+  *) echo "usage: pipeline.sh [all|download|verify|check|prepare|train|evaluate [--checkpoint FILE]|export --images DIR [--checkpoint FILE]|shell]" >&2; exit 2 ;;
 esac

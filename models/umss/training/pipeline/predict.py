@@ -181,6 +181,7 @@ if __name__ == '__main__':
     p = sub.add_parser('export')
     p.add_argument('--images', required=True, help='folder with chart images')
     p.add_argument('--out', default=None, help='default: <work>/predictions/npz')
+    p.add_argument('--checkpoint', default=argparse.SUPPRESS, help='same as before the command')
     args = parser.parse_args()
     args.checkpoint = args.checkpoint or os.path.join(args.work, 'ckpt', 'md_eam.hdf5')
     {'evaluate': evaluate, 'export': export}[args.command](args)
