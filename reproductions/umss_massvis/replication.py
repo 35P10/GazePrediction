@@ -29,6 +29,10 @@ RELEASED = REFERENCE / 'Data/UMSS/UMSS'
 IMAGE_ROOT = REFERENCE / 'Data/UMSS/GT_EFD_500_2000_5000'
 OUR_MAPS = DATA / 'ours/npz'  # old weights, md_eam.hdf5
 OUR_MAPS_LAST_EPOCH = DATA / 'ours_last_epoch/npz'  # new weights, md_eam_last_epoch.hdf5
+# The authors' weights (artifacts/checkpoints/umss/authors), exported on the Linux GPU machine.
+AUTHORS_RUN = EXPERIMENT.parents[1] / 'artifacts/runs/umss/massvis_md_eam_validation'
+AUTHORS_MAPS = AUTHORS_RUN / 'predictions/massvis_authors'  # paper model: 6 epochs, 0.5-2 s
+AUTHORS_MAPS_9EP = AUTHORS_RUN / 'predictions/massvis_authors_9ep'  # 9 epochs, 0.5-3 s
 SOURCE = json.loads((EXPERIMENT / 'source.json').read_text())
 PAPER_TABLE2 = SOURCE['paper_values']['table2']
 PAPER_TABLE1 = SOURCE['paper_values']['table1']

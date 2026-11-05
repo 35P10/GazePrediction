@@ -1,8 +1,9 @@
 # UMSS MD-EAM weights
 
 Two retrainings of MD-EAM (UMSS stage 1) with the authors' recipe (`UMSS-S1.ipynb`, DaRUS V2) and
-`models/umss/training/`. The authors did not release trained weights. `UMSS(checkpoint=...)` loads either;
-the default is `md_eam.hdf5`.
+`models/umss/training/`. The authors did not release trained weights; the first author later sent two by
+email ([Authors' weights](#authors-weights)). `UMSS(checkpoint=...)` loads any of them; the default is
+`md_eam.hdf5`.
 
 Settings shared by both, taken from the authors' notebook: MASSVIS encoding fixations, 327 training and
 66 validation images (the Table 2 evaluation images); MD-SEM CodeCharts initial weights; `md_sem` with a
@@ -46,15 +47,16 @@ exactly with the same evaluation.
 The two retrainings agree to within 0.01 although they differ in epoch selection, micro-batch and map export, so
 choosing the epoch on the evaluation charts did not inflate the old scores noticeably. Both are above the paper
 at 3 s (NSS +0.17, CC +0.08) and close to it at 5 s: the published recipe gives a model that matches or exceeds
-the paper's, not the paper's numbers. Why is not known: the authors released neither weights nor a training
-log (`UMSS-S1.ipynb` is saved without outputs), and their notebook and paper differ (9 vs 6 epochs).
+the paper's, not the paper's numbers. The authors released neither weights nor a training log
+(`UMSS-S1.ipynb` is saved without outputs); the weights they later sent show the gap is in their training
+([Authors' weights](#authors-weights)).
 
-Part of the gap is in the authors' maps, not in training. Their released maps are almost the same as the new
-weights' (CC 0.93 per chart) but sit about 10 px further right on every chart (median 10 px, range 5–25 px):
-moved 10 px left they score 1.448 / 0.602 (3 s NSS / CC) and 1.063 / 0.532 (5 s), so the 5 s gap closes and
-about a quarter of the 3 s gap does. The cause is not in their published code. Ruled out: a 0.5–2 s middle
-interval (their data folders are named `500_2000_5000`; ours still score higher against 2 s fixations) and
-blurrier maps (blurring ours barely changes the scores).
+Their released maps are almost the same as the new weights' (CC 0.93 per chart) but sit about 10 px further
+right on every chart (median 10 px, range 5–25 px): moved 10 px left they score 1.448 / 0.602 (3 s NSS / CC)
+and 1.063 / 0.532 (5 s), so the 5 s gap closes and about a quarter of the 3 s gap does. The authors' weights
+give their released maps through our export, so the shift comes from their model, not from how the maps were
+made (all 198 exported PNGs differ from the released ones by at most one grey level). Blurring our maps
+barely changes the scores.
 
 ### Seeds and epochs
 
@@ -75,10 +77,9 @@ has another hash because Keras saves it as a full model). Records in [sweep/](sw
 
 From epoch 3 on, seeds and epoch count move the scores by about 0.01, far less than the 0.17 gap at 3 s; 9
 epochs give the same as 6. Only epoch 1 comes near the paper at 3 s, but it is then far above it at 5 s, so no
-checkpoint of the published recipe gives Table 2. Training on 0.5–2 s, as the authors' S2 notebook paths
-suggest, moves away from the paper (3 s NSS 1.59 at epochs 3–6, 5 s NSS 1.15–1.16), so the paper's model was
-not trained that way either. What remains (about 0.13 NSS at 3 s after the 10 px shift)
-is outside the published materials; only the authors' weights or their exact prediction pipeline could settle it.
+checkpoint of the published recipe gives Table 2. Training on 0.5–2 s, the paper model's interval, moves our
+scores further from the paper (3 s NSS 1.59 at epochs 3–6, 5 s NSS 1.15–1.16), so our training differs from
+the authors' in something besides the interval.
 
 ## Authors' weights
 
@@ -94,7 +95,25 @@ intervals 0–0.5, 0.5–2 and 2–5 s, although the paper says 0.5–3 s. She c
 
 Their validation losses are about twice ours with the same settings (1.190 vs 0.596 for 0.5–2 s, 6 epochs;
 1.464 vs 0.763 for 0.5–3 s, 9 epochs), so their training differed in some way the published code does not
-show. Not evaluated yet: that needs TensorFlow 1.15 (`./run.sh evaluate --checkpoint ...`).
+show.
+
+Evaluated on the Linux GPU machine (2026-11-05) with `./run.sh evaluate --checkpoint ...`, then exported for
+the 66 MASSVIS charts. Records in `artifacts/runs/umss/massvis_md_eam_validation/`: `authors/eval_ep06.json`,
+`authors/eval_9ep_3000.json` (Table 2 means and checkpoint hash), the per-chart CSVs next to them, and the maps
+in `predictions/massvis_authors/` and `predictions/massvis_authors_9ep/`.
+
+| Table 2 | 3 s NSS / CC / KL / SIM | 5 s NSS / CC / KL / SIM |
+|---|---|---|
+| Paper | 1.406 / 0.586 / 0.754 / 0.516 | 1.024 / 0.514 / 0.689 / 0.530 |
+| Authors, 6 epochs, 0.5–2 s (paper model) | 1.406 / 0.586 / 0.754 / 0.516 | 1.024 / 0.514 / 0.689 / 0.530 |
+| Authors, 9 epochs, 0.5–3 s | 1.428 / 0.595 / 0.752 / 0.515 | 1.032 / 0.518 / 0.671 / 0.536 |
+| Ours, 6 epochs, 0.5–2 s (`sweep/seed0_6ep_2000`) | 1.592 / 0.669 / 0.663 / 0.552 | 1.156 / 0.586 / 0.647 / 0.542 |
+| Ours, 9 epochs, 0.5–3 s (`sweep/seed0_9ep`) | 1.579 / 0.663 / 0.685 / 0.537 | 1.065 / 0.536 / 0.694 / 0.526 |
+
+The paper model gives Table 2 to within 1e-4 (8-bit PNGs), so our preprocessing, export and evaluation match
+the authors' end to end. With the same known settings our retrainings are 0.15–0.19 NSS above theirs at 3 s,
+with every seed and epoch count we tried, so the gap comes from their training, which the published code does
+not fully describe (their validation loss is also twice ours).
 
 ## Adding weights
 
